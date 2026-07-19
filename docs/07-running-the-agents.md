@@ -1,7 +1,7 @@
 # Running the Agents
 
 `docs/roles/` describes what each AI seat is accountable for. `agents/` is a working
-implementation of three of those seats — enough to see the governance model
+implementation of all seven of those seats — enough to see the governance model
 (`docs/03-governance-and-escalation.md`) actually run, not just be described.
 
 ## What's implemented
@@ -11,9 +11,27 @@ implementation of three of those seats — enough to see the governance model
 | `docs/roles/ai-support.md` | `agents/support_agent.py` | triage, resolve |
 | `docs/roles/ai-sales.md` | `agents/sales_agent.py` | qualify (inbound) |
 | `docs/roles/ai-product-research.md` | `agents/product_research_agent.py` | cluster + brief |
+| `docs/roles/ai-marketing.md` | `agents/marketing_agent.py` | draft |
+| `docs/roles/ai-operations.md` | `agents/operations_agent.py` | track + nudge |
+| `docs/roles/ai-finance.md` | `agents/finance_agent.py` | reconcile (categorize) |
+| `docs/roles/ai-hr-recruiting.md` | `agents/hr_recruiting_agent.py` | screen |
 
-The other four roles (marketing, operations, finance, HR & recruiting) are documented
-but not yet coded — follow the same pattern in `agents/base.py` to add them.
+Every seat covers at least one full SOP end to end (guardrails → model call →
+confidence gate → audit/escalation), not the entirety of every SOP listed in its role
+file — e.g. `SupportAgent` doesn't implement the "close the loop" follow-up SOP,
+`FinanceAgent` doesn't implement invoicing or dunning. Extend a seat the same way
+you'd add a new one (see below).
+
+Two seats are worth calling out specifically because their guardrails encode a
+*permanent* policy from the role file, not just a starting point that autonomy earns
+its way past:
+
+- **`FinanceAgent`** — any `outbound_payment` transaction hard-escalates unconditionally.
+  `docs/roles/ai-finance.md` is explicit that this seat's "earned autonomy" never
+  extends to moving money out of the company, at any amount, at any autonomy tier.
+- **`HRRecruitingAgent`** — the code only exposes `screen()` (advance/decline against a
+  scorecard). There is no method for a hire/no-hire or offer decision, because the role
+  file says that's human-only, full stop - not something to gate behind confidence.
 
 ## Architecture
 
@@ -54,6 +72,10 @@ export ANTHROPIC_API_KEY=sk-ant-...
 python run_agents.py support     # triage + resolve data/tickets.sample.json
 python run_agents.py sales       # qualify data/leads.sample.json
 python run_agents.py research    # cluster data/signal.sample.json
+python run_agents.py marketing   # draft data/content_briefs.sample.json
+python run_agents.py operations  # assess data/workflows.sample.json
+python run_agents.py finance     # categorize data/transactions.sample.json
+python run_agents.py hr          # screen data/candidates.sample.json
 python run_agents.py all
 ```
 
@@ -61,11 +83,20 @@ Each run prints whether the action executed or escalated, then appends to
 `logs/audit.jsonl` and `logs/escalations.jsonl` (both gitignored — they're runtime
 output, not source).
 
-The sample data is deliberately mixed: `data/tickets.sample.json` includes a refund
-over threshold, an enterprise cancellation, and a GDPR request that should all hard-
-escalate; `data/signal.sample.json` includes a security mention from two different
-accounts that should trip the systemic-issue guardrail in
-`agents/product_research_agent.py`.
+The sample data is deliberately mixed so both the execute path and every escalation
+trigger get exercised, e.g.:
+
+- `data/tickets.sample.json` — a refund over threshold, an enterprise cancellation, a
+  GDPR request, and a repeated-contact ticket, alongside normal tickets.
+- `data/signal.sample.json` — a security mention from two different accounts, which
+  should trip the systemic-issue guardrail in `agents/product_research_agent.py`.
+- `data/content_briefs.sample.json` — a competitor name mention, an uncleared
+  testimonial, and spend over threshold.
+- `data/workflows.sample.json` — an access-change request, a workflow overdue past its
+  final nudge, and a recurring workflow missed by multiple owners.
+- `data/transactions.sample.json` — an outbound payment (always escalates), a disputed
+  charge, and an anomalous transfer.
+- `data/candidates.sample.json` — a compensation question and a discrimination concern.
 
 ## Running the tests
 

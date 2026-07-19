@@ -1,0 +1,47 @@
+[
+  {
+    "id": "W-4001",
+    "name": "New hire equipment request",
+    "owner": "IT coordinator",
+    "days_overdue": 0,
+    "nudge_count": 0,
+    "distinct_owners_missed": 0,
+    "requests_access_change": false
+  },
+  {
+    "id": "W-4002",
+    "name": "Monthly vendor invoice review",
+    "owner": "AP clerk",
+    "days_overdue": 2,
+    "nudge_count": 1,
+    "distinct_owners_missed": 0,
+    "requests_access_change": false
+  },
+  {
+    "id": "W-4003",
+    "name": "Quarterly access recertification",
+    "owner": "Security lead",
+    "days_overdue": 1,
+    "nudge_count": 1,
+    "distinct_owners_missed": 0,
+    "requests_access_change": true
+  },
+  {
+    "id": "W-4004",
+    "name": "Weekly expense report submission",
+    "owner": "Sales rep A",
+    "days_overdue": 5,
+    "nudge_count": 4,
+    "distinct_owners_missed": 0,
+    "requests_access_change": false
+  },
+  {
+    "id": "W-4005",
+    "name": "Onboarding checklist completion",
+    "owner": "rotating - multiple managers",
+    "days_overdue": 3,
+    "nudge_count": 1,
+    "distinct_owners_missed": 3,
+    "requests_access_change": false
+  }
+]

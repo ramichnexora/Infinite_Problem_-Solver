@@ -1,0 +1,42 @@
+[
+  {
+    "id": "C-3001",
+    "topic": "5 ways to cut onboarding time in half",
+    "channel": "blog",
+    "brief_text": "Practical tips for shortening customer onboarding, drawn from our own product usage data.",
+    "uses_testimonial": false,
+    "testimonial_cleared": false,
+    "requested_spend": 0,
+    "is_partnership_request": false
+  },
+  {
+    "id": "C-3002",
+    "topic": "Why teams are switching from CompetitorX",
+    "channel": "blog",
+    "brief_text": "A comparison post naming CompetitorX directly and why customers switched to us.",
+    "uses_testimonial": false,
+    "testimonial_cleared": false,
+    "requested_spend": 0,
+    "is_partnership_request": false
+  },
+  {
+    "id": "C-3003",
+    "topic": "Customer spotlight: how Acme Corp saved 10 hours a week",
+    "channel": "newsletter",
+    "brief_text": "Feature Acme Corp's logo and a quote from their ops lead.",
+    "uses_testimonial": true,
+    "testimonial_cleared": false,
+    "requested_spend": 0,
+    "is_partnership_request": false
+  },
+  {
+    "id": "C-3004",
+    "topic": "Boosted launch post for our new integration",
+    "channel": "social",
+    "brief_text": "Promote the new integration with paid social spend.",
+    "uses_testimonial": false,
+    "testimonial_cleared": false,
+    "requested_spend": 1500,
+    "is_partnership_request": false
+  }
+]
