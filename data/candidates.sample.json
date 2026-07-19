@@ -1,0 +1,30 @@
+[
+  {
+    "id": "H-6001",
+    "role": "Backend Engineer",
+    "scorecard_criteria": "3+ years backend experience, distributed systems, Python or Go",
+    "resume_summary": "4 years backend engineering at a mid-size SaaS company, built a Go microservices platform.",
+    "notes": "Referred by current employee."
+  },
+  {
+    "id": "H-6002",
+    "role": "Backend Engineer",
+    "scorecard_criteria": "3+ years backend experience, distributed systems, Python or Go",
+    "resume_summary": "Recent bootcamp grad, one internship in frontend development.",
+    "notes": "Applied through job board, no backend experience listed."
+  },
+  {
+    "id": "H-6003",
+    "role": "Account Executive",
+    "scorecard_criteria": "2+ years closing SaaS deals, quota attainment history",
+    "resume_summary": "3 years as an AE at a competitor, consistently 120% of quota.",
+    "notes": "Asked in her application email what the base salary and equity range is before proceeding."
+  },
+  {
+    "id": "H-6004",
+    "role": "Support Specialist",
+    "scorecard_criteria": "1+ years customer support, strong written communication",
+    "resume_summary": "2 years in a support role at a fintech startup.",
+    "notes": "Mentioned in a follow-up email that they felt a previous interviewer's questions were inappropriate and discriminatory."
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "TX-5001",
+    "amount": 49.0,
+    "description": "Monthly SaaS subscription charge from customer Bramble Studio",
+    "type": "inbound_payment",
+    "customer_dispute": false,
+    "is_duplicate_suspected": false,
+    "is_anomaly": false,
+    "tax_question": false
+  },
+  {
+    "id": "TX-5002",
+    "amount": 1200.0,
+    "description": "Vendor invoice payment to CloudHost Inc",
+    "type": "outbound_payment",
+    "customer_dispute": false,
+    "is_duplicate_suspected": false,
+    "is_anomaly": false,
+    "tax_question": false
+  },
+  {
+    "id": "TX-5003",
+    "amount": 89.0,
+    "description": "Card processing fee",
+    "type": "fee",
+    "customer_dispute": false,
+    "is_duplicate_suspected": false,
+    "is_anomaly": false,
+    "tax_question": false
+  },
+  {
+    "id": "TX-5004",
+    "amount": 199.0,
+    "description": "Customer says they were charged twice for the same invoice",
+    "type": "inbound_payment",
+    "customer_dispute": true,
+    "is_duplicate_suspected": true,
+    "is_anomaly": false,
+    "tax_question": false
+  },
+  {
+    "id": "TX-5005",
+    "amount": 15000.0,
+    "description": "Large unexplained transfer, no matching invoice or PO",
+    "type": "inbound_payment",
+    "customer_dispute": false,
+    "is_duplicate_suspected": false,
+    "is_anomaly": true,
+    "tax_question": false
+  }
+]

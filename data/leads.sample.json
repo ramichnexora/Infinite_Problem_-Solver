@@ -1,0 +1,38 @@
+[
+  {
+    "id": "L-2001",
+    "company": "Northwind Logistics",
+    "title": "VP Operations",
+    "company_size": "80-150 employees",
+    "notes": "Downloaded the ROI calculator, opened last 3 emails.",
+    "message": "Hi, we're evaluating tools to replace our manual scheduling process. Can we set up a call?",
+    "is_strategic_account": false
+  },
+  {
+    "id": "L-2002",
+    "company": "Acme Corp",
+    "title": "Student",
+    "company_size": "1 employee",
+    "notes": "Signed up with a personal email, no company domain match.",
+    "message": "Just curious what this does, not really looking to buy anything.",
+    "is_strategic_account": false
+  },
+  {
+    "id": "L-2003",
+    "company": "Massive Global Retail",
+    "title": "CTO",
+    "company_size": "5000+ employees",
+    "notes": "Named account on the strategic target list.",
+    "message": "We'd like to discuss an enterprise deployment.",
+    "is_strategic_account": true
+  },
+  {
+    "id": "L-2004",
+    "company": "Bramble Studio",
+    "title": "Founder",
+    "company_size": "5-10 employees",
+    "notes": "Replied to outbound sequence.",
+    "message": "What's your pricing for a team of 8?",
+    "is_strategic_account": false
+  }
+]
