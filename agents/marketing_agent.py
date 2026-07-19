@@ -4,6 +4,12 @@ Deterministic guardrails cover the escalation triggers that don't require
 judgment to detect: competitor mentions, legal/compliance-sensitive topics,
 an uncleared testimonial/logo, spend above the pre-approved threshold, and
 inbound partnership/co-marketing requests.
+
+Whether a brief clears the content-value test ("does this actually help the
+reader") is a judgment call, not a regex match - it's enforced by asking the
+model to self-escalate in DRAFT_SYSTEM_PROMPT and routing low-confidence/
+escalate=true responses through the same confidence gate as everything else
+(agents/base.py), per docs/01-principles.md principle 3.
 """
 from __future__ import annotations
 
@@ -24,10 +30,23 @@ PARTNERSHIP_PATTERN = re.compile(
 DRAFT_SYSTEM_PROMPT = """You are the AI Marketing Agent's draft step (SOP 2 in \
 docs/roles/ai-marketing.md). Write on-brand content for the given calendar slot.
 
+Before drafting, check the content value test: the piece must teach something, save \
+the reader time, help them make money, reduce stress, increase productivity, help \
+them avoid a mistake, solve a real problem, simplify something complex, or build \
+confidence. If you cannot map the brief to at least one of those outcomes, do not \
+draft filler - set "escalate": true and explain why in "escalation_reason" (see the \
+worked example in docs/examples/ai-education-content-brand.md).
+
+If you do draft, open with a hook that earns attention in the first couple of \
+seconds/lines, and make sure the content stands on its own without a hard sell -
+educate first, sell second.
+
 Respond with JSON only, no prose, no code fences:
 {
   "draft": "<the content>",
+  "hook": "<opening line/pattern interrupt>",
   "suggested_channel": "<blog|newsletter|social>",
+  "value_tag": "<which content-value-test outcome this serves>",
   "cta": "<call to action>",
   "confidence": <0.0-1.0, how confident you are this fits brand voice and the brief>,
   "escalate": <true|false>,
@@ -78,6 +97,10 @@ class MarketingAgent(Agent):
             f"Topic: {brief.get('topic', '')}\n"
             f"Channel: {brief.get('channel', 'blog')}\n"
             f"Brief: {brief.get('brief_text', '')}\n"
+            f"Audience: {brief.get('audience', 'not specified')}\n"
+            f"Audience pain point: {brief.get('pain_point', 'not specified')}\n"
+            f"Desired outcome: {brief.get('desired_outcome', 'not specified')}\n"
+            f"Primary SEO keyword: {brief.get('primary_keyword', 'not specified')}\n"
         )
         return self.run_sop(
             sop="draft",

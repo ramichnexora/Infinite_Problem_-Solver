@@ -39,6 +39,12 @@ every system of record is unambiguous.
 - **Escalation queue** — a single place Tier 3 items land, regardless of which seat
   raised them, so a human lead isn't checking seven different inboxes.
 
+For a content-commerce brand (Shopify + digital products instead of a sales-led
+motion), the Marketing row above extends to the store and social schedulers/analytics
+sources it publishes through — see `docs/examples/ai-education-content-brand.md` for
+the worked-out platform list; scope each one through "Adding a new integration" below
+before granting write access.
+
 ## Adding a new integration
 
 When a role needs a new tool: confirm it doesn't duplicate an existing system of
