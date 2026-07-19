@@ -15,8 +15,13 @@ run the day-to-day.
 - [`docs/04-tech-stack.md`](docs/04-tech-stack.md) — the tools/integrations each role needs
 - [`docs/05-metrics-dashboard.md`](docs/05-metrics-dashboard.md) — the KPI set leadership watches across all roles
 - [`docs/06-implementation-roadmap.md`](docs/06-implementation-roadmap.md) — the phased rollout, augmentation → autonomy
+- [`docs/07-running-the-agents.md`](docs/07-running-the-agents.md) — working agent code for all 7 seats: setup, running, testing, extending
+- [`docs/08-telegram-bot.md`](docs/08-telegram-bot.md) — a real Telegram channel wired to the AI Support Agent
 
 ## Status
 
-Early scaffold. Roles and SOPs here are a starting framework, meant to be adapted to a
-specific company rather than used as-is.
+Framework docs for all 7 seats, plus a working agent runtime (`agents/`) implementing
+one SOP per seat with guardrails, a confidence gate, an audit log, and an escalation
+queue — see `docs/07-running-the-agents.md` to run it. `integrations/telegram_bot.py`
+wires the Support seat to a live Telegram bot. Nothing yet writes to a real
+CRM/helpdesk/accounting system beyond that.
