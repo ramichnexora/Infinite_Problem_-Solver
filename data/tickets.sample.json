@@ -1,0 +1,50 @@
+[
+  {
+    "id": "T-1001",
+    "subject": "Can't reset my password",
+    "body": "I requested a password reset an hour ago and never got the email. Checked spam already.",
+    "account_tier": "standard",
+    "contact_count": 1,
+    "requested_refund_amount": null
+  },
+  {
+    "id": "T-1002",
+    "subject": "Charged twice this month",
+    "body": "My card was charged twice for the same invoice, please refund the duplicate $45 charge.",
+    "account_tier": "standard",
+    "contact_count": 1,
+    "requested_refund_amount": 45.0
+  },
+  {
+    "id": "T-1003",
+    "subject": "Refund request",
+    "body": "I want a full refund of my last three invoices, this product doesn't do what I need.",
+    "account_tier": "standard",
+    "contact_count": 1,
+    "requested_refund_amount": 480.0
+  },
+  {
+    "id": "T-1004",
+    "subject": "Cancelling our contract",
+    "body": "We're considering cancelling our enterprise plan next renewal, need to talk to someone.",
+    "account_tier": "enterprise",
+    "contact_count": 1,
+    "requested_refund_amount": null
+  },
+  {
+    "id": "T-1005",
+    "subject": "GDPR data request",
+    "body": "Please provide all personal data you hold on our EU users per GDPR Article 15.",
+    "account_tier": "standard",
+    "contact_count": 1,
+    "requested_refund_amount": null
+  },
+  {
+    "id": "T-1006",
+    "subject": "This is unacceptable",
+    "body": "Third time contacting support this week about the same export bug. Unacceptable service.",
+    "account_tier": "standard",
+    "contact_count": 3,
+    "requested_refund_amount": null
+  }
+]

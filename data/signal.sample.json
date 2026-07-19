@@ -1,0 +1,9 @@
+[
+  {"source": "support_ticket", "account": "Acct-A", "text": "Export feature times out for large datasets."},
+  {"source": "sales_call_notes", "account": "Acct-B", "text": "Prospect asked if we support SSO/SAML, blocker for their security team."},
+  {"source": "support_ticket", "account": "Acct-C", "text": "Export feature fails silently, no error shown."},
+  {"source": "churn_survey", "account": "Acct-D", "text": "Left because export was unreliable for our monthly reporting."},
+  {"source": "support_ticket", "account": "Acct-E", "text": "Found a potential security vulnerability - was able to view another team's data by editing a URL parameter."},
+  {"source": "support_ticket", "account": "Acct-F", "text": "Similar issue - our exported report contained rows from a different account, feels like a security bug."},
+  {"source": "sales_call_notes", "account": "Acct-G", "text": "Asked about dark mode support, not a blocker."}
+]
