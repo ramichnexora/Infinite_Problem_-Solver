@@ -75,3 +75,59 @@ def test_legal_topic_hard_escalates(audit_log, escalation_queue):
 
     assert result.executed is False
     assert "legal" in result.escalation_reason
+
+
+def test_model_escalates_when_no_content_value(audit_log, escalation_queue):
+    """The content-value test (teach/save time/make money/... ) is a judgment call,
+    so it's enforced by the model self-escalating, not a hard guardrail - see
+    docs/examples/ai-education-content-brand.md."""
+    llm = FakeLLMClient(
+        {
+            "draft": None,
+            "hook": None,
+            "suggested_channel": "social",
+            "value_tag": None,
+            "cta": None,
+            "confidence": 0.2,
+            "escalate": True,
+            "escalation_reason": "brief has no clear educational/business value, would just be filler",
+        }
+    )
+    agent = make_agent(llm, audit_log, escalation_queue)
+    brief = {"id": "C-6", "topic": "post something today", "brief_text": "anything trending, just get views"}
+
+    result = agent.draft(brief)
+
+    assert result.executed is False
+    assert "filler" in result.escalation_reason
+
+
+def test_draft_prompt_carries_content_value_test_and_audience_framework(audit_log, escalation_queue):
+    llm = FakeLLMClient(
+        {
+            "draft": "...",
+            "hook": "...",
+            "suggested_channel": "social",
+            "value_tag": "save time",
+            "cta": "...",
+            "confidence": 0.9,
+            "escalate": False,
+            "escalation_reason": None,
+        }
+    )
+    agent = make_agent(llm, audit_log, escalation_queue)
+    brief = {
+        "id": "C-7",
+        "topic": "onboarding tips",
+        "brief_text": "practical tips",
+        "audience": "solo founders new to AI tools",
+        "pain_point": "wasting hours on manual setup",
+        "desired_outcome": "a working onboarding flow in under 30 minutes",
+        "primary_keyword": "ai onboarding checklist",
+    }
+
+    agent.draft(brief)
+
+    assert "content value test" in llm.calls[0]["system"]
+    assert "solo founders new to AI tools" in llm.calls[0]["user"]
+    assert "ai onboarding checklist" in llm.calls[0]["user"]
