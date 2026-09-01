@@ -1,0 +1,38 @@
+[
+  {
+    "id": "D-4001",
+    "title": "Add CSV export button to the reports page",
+    "description": "Add a button that exports the current report table view to CSV client-side.",
+    "area": "web/reports",
+    "priority": "medium",
+    "no_test_plan": false,
+    "is_production_hotfix": false
+  },
+  {
+    "id": "D-4002",
+    "title": "Fix session timeout redirect loop",
+    "description": "Update the auth token refresh logic so expired sessions redirect to login instead of looping.",
+    "area": "web/auth",
+    "priority": "high",
+    "no_test_plan": false,
+    "is_production_hotfix": false
+  },
+  {
+    "id": "D-4003",
+    "title": "Backfill missing order totals",
+    "description": "Run a production data migration to recompute historical order totals affected by the rounding bug.",
+    "area": "billing",
+    "priority": "high",
+    "no_test_plan": false,
+    "is_production_hotfix": false
+  },
+  {
+    "id": "D-4004",
+    "title": "Tweak empty-state copy on the dashboard",
+    "description": "Change the empty-state message when a user has no projects yet.",
+    "area": "web/dashboard",
+    "priority": "low",
+    "no_test_plan": true,
+    "is_production_hotfix": false
+  }
+]

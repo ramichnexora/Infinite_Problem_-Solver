@@ -17,14 +17,21 @@ flowchart TD
     CEO --> FinLead["Finance Leader (human)"]
     CEO --> PeopleLead["People Leader (human)"]
     CEO --> ProductLead["Product Leader (human)"]
+    CEO --> EngLead["Engineering Leader (human)"]
+    CEO --> DesignLead["Design Leader (human)"]
+    CEO --> EcomLead["Ecommerce Leader (human)"]
 
     SalesLead --> AISales["AI Sales Agent\n(docs/roles/ai-sales.md)"]
     MktLead --> AIMkt["AI Marketing Agent\n(docs/roles/ai-marketing.md)"]
+    MktLead --> AISocial["AI Social Media Agent\n(docs/roles/ai-social-media.md)"]
     OpsLead --> AISupport["AI Support Agent\n(docs/roles/ai-support.md)"]
     OpsLead --> AIOps["AI Operations Agent\n(docs/roles/ai-operations.md)"]
     FinLead --> AIFinance["AI Finance Agent\n(docs/roles/ai-finance.md)"]
     PeopleLead --> AIHR["AI HR & Recruiting Agent\n(docs/roles/ai-hr-recruiting.md)"]
     ProductLead --> AIProduct["AI Product Research Agent\n(docs/roles/ai-product-research.md)"]
+    EngLead --> AIDev["AI Developer Agent\n(docs/roles/ai-developer.md)"]
+    DesignLead --> AIDesign["AI Designer Agent\n(docs/roles/ai-designer.md)"]
+    EcomLead --> AIShopify["AI Shopify Manager Agent\n(docs/roles/ai-shopify-manager.md)"]
 ```
 
 ## Reporting rhythm
@@ -47,6 +54,10 @@ flowchart TD
 | Finance | Finance Leader | AI Finance Agent | Accurate books, on-time invoicing/collections, cash visibility |
 | People | People Leader | AI HR & Recruiting Agent | Source and screen candidates, run onboarding logistics |
 | Product | Product Leader | AI Product Research Agent | Turn customer signal into prioritized product insight |
+| Engineering | Engineering Leader | AI Developer Agent | Triage and implement well-scoped engineering tickets |
+| Design | Design Leader | AI Designer Agent | Produce on-brand visual assets at content pace |
+| Ecommerce | Ecommerce Leader | AI Shopify Manager Agent | Keep storefront listings, pricing, and inventory accurate |
+| Marketing | Marketing Leader | AI Social Media Agent | Keep an everyday, on-brand social posting cadence |
 
 ## What stays human-only
 

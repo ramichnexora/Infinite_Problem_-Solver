@@ -1,0 +1,38 @@
+[
+  {
+    "id": "DS-5001",
+    "title": "Instagram carousel for product feature launch",
+    "format": "social carousel (4 slides)",
+    "brief_text": "Announce the new bulk-export feature using existing brand colors and iconography.",
+    "uses_third_party_asset": false,
+    "license_cleared": false,
+    "is_client_facing": false
+  },
+  {
+    "id": "DS-5002",
+    "title": "New company logo exploration",
+    "format": "logo concepts",
+    "brief_text": "Explore 3 directions for a refreshed logo ahead of the rebrand.",
+    "uses_third_party_asset": false,
+    "license_cleared": false,
+    "is_client_facing": false
+  },
+  {
+    "id": "DS-5003",
+    "title": "Investor deck cover slide",
+    "format": "presentation slide",
+    "brief_text": "Design the cover slide for the Series B investor deck.",
+    "uses_third_party_asset": false,
+    "license_cleared": false,
+    "is_client_facing": true
+  },
+  {
+    "id": "DS-5004",
+    "title": "Blog header image for onboarding article",
+    "format": "blog header",
+    "brief_text": "Header image using a licensed stock photo of a team collaborating.",
+    "uses_third_party_asset": true,
+    "license_cleared": false,
+    "is_client_facing": false
+  }
+]
