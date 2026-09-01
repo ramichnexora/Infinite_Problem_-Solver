@@ -1,0 +1,46 @@
+[
+  {
+    "id": "SHP-6001",
+    "product_title": "Classic Canvas Tote",
+    "change_type": "inventory_update",
+    "current_price": 28.0,
+    "new_price": 28.0,
+    "new_inventory_count": 140,
+    "is_best_seller": false,
+    "involves_legal_or_health_claim": false,
+    "notes": "Restock count from latest shipment received."
+  },
+  {
+    "id": "SHP-6002",
+    "product_title": "Everyday Sneaker",
+    "change_type": "price_change",
+    "current_price": 60.0,
+    "new_price": 90.0,
+    "new_inventory_count": 50,
+    "is_best_seller": false,
+    "involves_legal_or_health_claim": false,
+    "notes": "Supplier cost increase - proposed price bump."
+  },
+  {
+    "id": "SHP-6003",
+    "product_title": "Signature Hoodie",
+    "change_type": "inventory_update",
+    "current_price": 45.0,
+    "new_price": 45.0,
+    "new_inventory_count": 0,
+    "is_best_seller": true,
+    "involves_legal_or_health_claim": false,
+    "notes": "Last units sold out overnight."
+  },
+  {
+    "id": "SHP-6004",
+    "product_title": "Refund for order #10432",
+    "change_type": "refund",
+    "current_price": 45.0,
+    "new_price": null,
+    "new_inventory_count": null,
+    "is_best_seller": false,
+    "involves_legal_or_health_claim": false,
+    "notes": "Customer requesting refund for damaged item."
+  }
+]

@@ -26,6 +26,10 @@ every system of record is unambiguous.
 | AI Finance Agent | Accounting platform | Bank/payment processor (read-only) | Invoicing tool, accounting categorization — **no payment-initiation write access** |
 | AI HR & Recruiting Agent | ATS | Calendar availability | ATS candidate status, interview scheduling, onboarding checklist |
 | AI Product Research Agent | Insight brief doc/wiki | Helpdesk, CRM/call notes, churn survey results | Insight brief only |
+| AI Developer Agent | Source control (git) | Issue tracker, CI/test results | Feature branches, PRs, tests — no direct production deploy access |
+| AI Designer Agent | Shared asset library | Brand style guide, design tool | Draft assets in the design tool and asset library |
+| AI Shopify Manager Agent | Shopify admin | Inventory data source | Product listings, pricing (within threshold), inventory counts |
+| AI Social Media Agent | Social scheduling tool | Analytics/engagement source, brand style guide | Scheduled/published posts on owned channels |
 
 ## Cross-cutting infrastructure
 

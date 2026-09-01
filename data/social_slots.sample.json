@@ -1,0 +1,42 @@
+[
+  {
+    "id": "SOC-7001",
+    "topic": "Behind-the-scenes photo from the studio today",
+    "platform": "instagram",
+    "notes": "Casual, everyday content - no promotion.",
+    "is_giveaway": false,
+    "requested_boost_spend": 0
+  },
+  {
+    "id": "SOC-7002",
+    "topic": "Customer unboxing video repost",
+    "platform": "tiktok",
+    "notes": "Repost with credit to the original creator.",
+    "is_giveaway": false,
+    "requested_boost_spend": 0
+  },
+  {
+    "id": "SOC-7003",
+    "topic": "Why customers are leaving CompetitorX for us",
+    "platform": "x",
+    "notes": "Direct comparison post.",
+    "is_giveaway": false,
+    "requested_boost_spend": 0
+  },
+  {
+    "id": "SOC-7004",
+    "topic": "Win a year of free product - giveaway announcement",
+    "platform": "instagram",
+    "notes": "Follow, tag 3 friends, and share to enter.",
+    "is_giveaway": true,
+    "requested_boost_spend": 0
+  },
+  {
+    "id": "SOC-7005",
+    "topic": "Weekend flash sale reminder",
+    "platform": "facebook",
+    "notes": "Boost this post to reach a wider local audience.",
+    "is_giveaway": false,
+    "requested_boost_spend": 250
+  }
+]

@@ -9,6 +9,10 @@ Usage:
     python run_agents.py operations  # assess data/workflows.sample.json
     python run_agents.py finance     # categorize data/transactions.sample.json
     python run_agents.py hr          # screen data/candidates.sample.json
+    python run_agents.py developer   # triage data/dev_tickets.sample.json
+    python run_agents.py designer    # draft_concept data/design_briefs.sample.json
+    python run_agents.py shopify     # review_change data/shopify_requests.sample.json
+    python run_agents.py social      # draft_post data/social_slots.sample.json
     python run_agents.py all         # run everything
 
 Requires ANTHROPIC_API_KEY to be set - see docs/07-running-the-agents.md.
@@ -22,6 +26,8 @@ import json
 import sys
 from pathlib import Path
 
+from agents.designer_agent import DesignerAgent
+from agents.developer_agent import DeveloperAgent
 from agents.finance_agent import FinanceAgent
 from agents.hr_recruiting_agent import HRRecruitingAgent
 from agents.llm import AnthropicLLMClient
@@ -29,6 +35,8 @@ from agents.marketing_agent import MarketingAgent
 from agents.operations_agent import OperationsAgent
 from agents.product_research_agent import ProductResearchAgent
 from agents.sales_agent import SalesAgent
+from agents.shopify_manager_agent import ShopifyManagerAgent
+from agents.social_media_agent import SocialMediaAgent
 from agents.support_agent import SupportAgent
 
 DATA_DIR = Path(__file__).parent / "data"
@@ -97,11 +105,52 @@ def run_hr(llm) -> None:
         _print_result(f"hr/screen {candidate['id']}", result)
 
 
+def run_developer(llm) -> None:
+    agent = DeveloperAgent(llm)
+    for ticket in _load("dev_tickets.sample.json"):
+        result = agent.triage(ticket)
+        _print_result(f"developer/triage {ticket['id']}", result)
+
+
+def run_designer(llm) -> None:
+    agent = DesignerAgent(llm)
+    for brief in _load("design_briefs.sample.json"):
+        result = agent.draft_concept(brief)
+        _print_result(f"designer/draft_concept {brief['id']}", result)
+
+
+def run_shopify(llm) -> None:
+    agent = ShopifyManagerAgent(llm)
+    for request in _load("shopify_requests.sample.json"):
+        result = agent.review_change(request)
+        _print_result(f"shopify/review_change {request['id']}", result)
+
+
+def run_social(llm) -> None:
+    agent = SocialMediaAgent(llm, competitor_names=["CompetitorX"])
+    for slot in _load("social_slots.sample.json"):
+        result = agent.draft_post(slot)
+        _print_result(f"social/draft_post {slot['id']}", result)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "agent",
-        choices=["support", "sales", "research", "marketing", "operations", "finance", "hr", "all"],
+        choices=[
+            "support",
+            "sales",
+            "research",
+            "marketing",
+            "operations",
+            "finance",
+            "hr",
+            "developer",
+            "designer",
+            "shopify",
+            "social",
+            "all",
+        ],
     )
     args = parser.parse_args()
 
@@ -121,6 +170,14 @@ def main() -> int:
         run_finance(llm)
     if args.agent in ("hr", "all"):
         run_hr(llm)
+    if args.agent in ("developer", "all"):
+        run_developer(llm)
+    if args.agent in ("designer", "all"):
+        run_designer(llm)
+    if args.agent in ("shopify", "all"):
+        run_shopify(llm)
+    if args.agent in ("social", "all"):
+        run_social(llm)
 
     print("\nAudit log: logs/audit.jsonl")
     print("Escalation queue: logs/escalations.jsonl")

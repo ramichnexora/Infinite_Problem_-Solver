@@ -18,11 +18,14 @@ run the day-to-day.
 - [`docs/07-running-the-agents.md`](docs/07-running-the-agents.md) — working agent code for all 7 seats: setup, running, testing, extending
 - [`docs/08-telegram-bot.md`](docs/08-telegram-bot.md) — a real Telegram channel wired to the AI Support Agent
 - [`docs/09-deploying-the-bot.md`](docs/09-deploying-the-bot.md) — running the bot on a free host with no terminal required
+- [`docs/10-business-strategy-audit.md`](docs/10-business-strategy-audit.md) — the recurring audit for deciding what an AI seat absorbs next
 
 ## Status
 
-Framework docs for all 7 seats, plus a working agent runtime (`agents/`) implementing
+Framework docs for all 11 seats, plus a working agent runtime (`agents/`) implementing
 one SOP per seat with guardrails, a confidence gate, an audit log, and an escalation
-queue — see `docs/07-running-the-agents.md` to run it. `integrations/telegram_bot.py`
-wires the Support seat to a live Telegram bot. Nothing yet writes to a real
-CRM/helpdesk/accounting system beyond that.
+queue — see `docs/07-running-the-agents.md` to run it. The seats: Sales, Marketing,
+Support, Operations, Finance, HR & Recruiting, Product Research, Developer, Designer,
+Shopify Manager, and Social Media. `integrations/telegram_bot.py` wires the Support
+seat to a live Telegram bot. Nothing yet writes to a real CRM/helpdesk/accounting/
+Shopify system beyond that.

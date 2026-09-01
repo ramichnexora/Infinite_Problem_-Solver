@@ -15,6 +15,10 @@ implementation of all seven of those seats — enough to see the governance mode
 | `docs/roles/ai-operations.md` | `agents/operations_agent.py` | track + nudge |
 | `docs/roles/ai-finance.md` | `agents/finance_agent.py` | reconcile (categorize) |
 | `docs/roles/ai-hr-recruiting.md` | `agents/hr_recruiting_agent.py` | screen |
+| `docs/roles/ai-developer.md` | `agents/developer_agent.py` | triage |
+| `docs/roles/ai-designer.md` | `agents/designer_agent.py` | draft_concept |
+| `docs/roles/ai-shopify-manager.md` | `agents/shopify_manager_agent.py` | review_change |
+| `docs/roles/ai-social-media.md` | `agents/social_media_agent.py` | draft_post |
 
 Every seat covers at least one full SOP end to end (guardrails → model call →
 confidence gate → audit/escalation), not the entirety of every SOP listed in its role
@@ -76,6 +80,10 @@ python run_agents.py marketing   # draft data/content_briefs.sample.json
 python run_agents.py operations  # assess data/workflows.sample.json
 python run_agents.py finance     # categorize data/transactions.sample.json
 python run_agents.py hr          # screen data/candidates.sample.json
+python run_agents.py developer   # triage data/dev_tickets.sample.json
+python run_agents.py designer    # draft_concept data/design_briefs.sample.json
+python run_agents.py shopify     # review_change data/shopify_requests.sample.json
+python run_agents.py social      # draft_post data/social_slots.sample.json
 python run_agents.py all
 ```
 
@@ -97,6 +105,14 @@ trigger get exercised, e.g.:
 - `data/transactions.sample.json` — an outbound payment (always escalates), a disputed
   charge, and an anomalous transfer.
 - `data/candidates.sample.json` — a compensation question and a discrimination concern.
+- `data/dev_tickets.sample.json` — a change touching auth, a production-data migration, and a
+  ticket with no test plan.
+- `data/design_briefs.sample.json` — a logo exploration, a client-facing investor deck slide, and
+  an uncleared stock photo.
+- `data/shopify_requests.sample.json` — a refund request, a price change over threshold, and a
+  best-seller going out of stock.
+- `data/social_slots.sample.json` — a competitor mention, a giveaway, and a boosted post over
+  spend threshold.
 
 ## Running the tests
 
