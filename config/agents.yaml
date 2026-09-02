@@ -1,0 +1,91 @@
+# MILI agent registry.
+#
+# This is the single source of truth for "which agents exist and who owns
+# what" — MILI reads this instead of hardcoding seat names, which is what
+# lets the roster grow from 8 to 60+ entries without touching mili.py,
+# base.py, or any existing agent file.
+#
+# Fields:
+#   id        - unique key, matches Agent.seat in agents/base.py subclasses
+#   module    - python import path
+#   class     - class name inside that module
+#   parent    - "mili" for a top-level seat, or another agent's id for a
+#               sub-agent (not used yet — reserved for the 60+ phase)
+#   status    - active | draft | disabled
+#   docs      - path to the role contract in docs/roles/
+#   default_tier - default approval tier per docs/03-governance-and-escalation.md
+#                  (1=autonomous, 2=notify, 3=human sign-off)
+
+orchestrator:
+  id: mili
+  module: agents.mili
+  class: MILI
+  parent: null
+  status: active
+  docs: null
+
+agents:
+  - id: support
+    module: agents.support_agent
+    class: SupportAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-support.md
+    default_tier: 1
+
+  - id: sales
+    module: agents.sales_agent
+    class: SalesAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-sales.md
+    default_tier: 2
+
+  - id: marketing
+    module: agents.marketing_agent
+    class: MarketingAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-marketing.md
+    default_tier: 2
+
+  - id: operations
+    module: agents.operations_agent
+    class: OperationsAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-operations.md
+    default_tier: 2
+
+  - id: finance
+    module: agents.finance_agent
+    class: FinanceAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-finance.md
+    default_tier: 3
+
+  - id: hr_recruiting
+    module: agents.hr_recruiting_agent
+    class: HRRecruitingAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-hr-recruiting.md
+    default_tier: 3
+
+  - id: product_research
+    module: agents.product_research_agent
+    class: ProductResearchAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-product-research.md
+    default_tier: 2
+
+# --- Reserved for future seats (not yet justified per docs/01-principles.md #8) ---
+# Add an entry here only when a task is recurring, specialization materially
+# improves quality, the workflow is documented as a playbook first, and
+# delegation saves significant time. Do not pre-create idle seats.
+#
+# - id: google_ads
+#   parent: marketing        # sub-agent under an existing seat once justified
+#   status: draft
