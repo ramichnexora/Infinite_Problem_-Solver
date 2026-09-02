@@ -1,0 +1,30 @@
+# First real automation config - instantiates the pattern automation/README.md
+# describes. Run by run_daily_social_post.py (top-level), not by this file
+# alone - there is no scheduler daemon in this repo yet; wire this schedule
+# to an actual cron entry (or equivalent) calling that script.
+
+id: daily-social-post
+trigger: cron
+schedule: "0 9 * * *"       # 09:00 daily - confirm/adjust to the founder's timezone
+target_seat: marketing       # config/agents.yaml id
+sop_sequence:
+  - plan_daily_content
+  - draft
+  - publish
+channels:
+  - instagram
+  - facebook
+  - tiktok
+
+# Every channel starts at Tier 3 (Human Approval) regardless of whether a
+# live integration exists, per docs/06-implementation-roadmap.md Phase 1.
+# Promote a channel to tier 2 (NOTIFY) here only after its clean-run exit
+# criterion is met - tiktok cannot be promoted until integrations/tiktok.py
+# is real (see that file).
+tier_override:
+  instagram: 3
+  facebook: 3
+  tiktok: 3
+
+# recent_topics lookback window for plan_daily_content()'s no-repeat rule.
+lookback_days: 14

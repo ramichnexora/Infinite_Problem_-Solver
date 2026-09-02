@@ -45,6 +45,24 @@ sources it publishes through — see `docs/examples/ai-education-content-brand.m
 the worked-out platform list; scope each one through "Adding a new integration" below
 before granting write access.
 
+### Daily social posting automation (`automation/daily-social-post.yaml`)
+
+Live integrations added for Instagram and Facebook (`integrations/instagram.py`,
+`integrations/facebook.py`) — TikTok deferred (`integrations/tiktok.py`, pending its
+Content Posting API app review). Required env vars, **never committed**:
+
+| Var | Used by |
+|---|---|
+| `IG_ACCESS_TOKEN` | `integrations/instagram.py` |
+| `IG_BUSINESS_ACCOUNT_ID` | `integrations/instagram.py` |
+| `FB_PAGE_ACCESS_TOKEN` | `integrations/facebook.py` |
+| `FB_PAGE_ID` | `integrations/facebook.py` |
+
+Every channel starts at Tier 3 in `automation/daily-social-post.yaml`'s
+`tier_override` regardless of whether these are set — setting the env vars only
+enables the *option* to promote a channel past Tier 3 once its clean-run exit
+criterion (`docs/06-implementation-roadmap.md`) is met.
+
 ## Adding a new integration
 
 When a role needs a new tool: confirm it doesn't duplicate an existing system of

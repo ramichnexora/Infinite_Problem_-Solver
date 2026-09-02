@@ -33,6 +33,18 @@ Guide title/outline, target audience segment, existing reviews/DM language,
 4. **Weekly newsletter (Story-Lesson-Offer)** — Role: newsletter editor.
    Context: list size, topic, featured guide. Command: personal win, one
    lesson, one CTA. Format: subject, preview, body.
+5. **Daily trend-based post (Plan -> Draft -> Publish)** — the automated
+   daily posting pipeline (`automation/daily-social-post.yaml`,
+   `run_daily_social_post.py`). Plan (`MarketingAgent.plan_daily_content()`)
+   runs the same Storyteller pattern as prompt #1 above to produce one fresh
+   angle per day across Instagram/Facebook/TikTok, avoiding the last
+   `lookback_days` of angles. Draft reuses prompt logic already implemented
+   in `agents/marketing_agent.py::draft()`. Publish
+   (`MarketingAgent.publish()`) only actually posts once a channel is
+   promoted past Tier 3 in the automation config's `tier_override` — every
+   channel starts in draft-and-review, queued to `tasks/` for the founder to
+   approve by hand. TikTok cannot be promoted until `integrations/tiktok.py`
+   is real (pending TikTok's Content Posting API app review).
 
 ## Tools
 `marketing` agent seat; Claude for drafting; Canva for visuals (see
