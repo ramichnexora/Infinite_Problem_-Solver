@@ -16,14 +16,18 @@ channels:
   - facebook
   - tiktok
 
-# Every channel starts at Tier 3 (Human Approval) regardless of whether a
-# live integration exists, per docs/06-implementation-roadmap.md Phase 1.
-# Promote a channel to tier 2 (NOTIFY) here only after its clean-run exit
-# criterion is met - tiktok cannot be promoted until integrations/tiktok.py
-# is real (see that file).
+# Promoted 2026-09-03 (founder decision, recorded in memory/decisions/) -
+# instagram and facebook now autonomous+notify (tier 2): they'll actually
+# publish once IG_ACCESS_TOKEN/IG_BUSINESS_ACCOUNT_ID and
+# FB_PAGE_ACCESS_TOKEN/FB_PAGE_ID are set in the environment that runs
+# run_daily_social_post.py. Without those env vars, publish() still safely
+# falls back to Tier 3 for that channel (see MarketingAgent.publish() -
+# "no live publishing integration registered"), so promoting here alone
+# does not risk an accidental post. tiktok cannot be promoted until
+# integrations/tiktok.py is real (see that file).
 tier_override:
-  instagram: 3
-  facebook: 3
+  instagram: 2
+  facebook: 2
   tiktok: 3
 
 # recent_topics lookback window for plan_daily_content()'s no-repeat rule.
