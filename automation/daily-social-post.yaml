@@ -1,0 +1,34 @@
+# First real automation config - instantiates the pattern automation/README.md
+# describes. Run by run_daily_social_post.py (top-level), not by this file
+# alone - there is no scheduler daemon in this repo yet; wire this schedule
+# to an actual cron entry (or equivalent) calling that script.
+
+id: daily-social-post
+trigger: cron
+schedule: "0 9 * * *"       # 09:00 daily - confirm/adjust to the founder's timezone
+target_seat: marketing       # config/agents.yaml id
+sop_sequence:
+  - plan_daily_content
+  - draft
+  - publish
+channels:
+  - instagram
+  - facebook
+  - tiktok
+
+# Promoted 2026-09-03 (founder decision, recorded in memory/decisions/) -
+# instagram and facebook now autonomous+notify (tier 2): they'll actually
+# publish once IG_ACCESS_TOKEN/IG_BUSINESS_ACCOUNT_ID and
+# FB_PAGE_ACCESS_TOKEN/FB_PAGE_ID are set in the environment that runs
+# run_daily_social_post.py. Without those env vars, publish() still safely
+# falls back to Tier 3 for that channel (see MarketingAgent.publish() -
+# "no live publishing integration registered"), so promoting here alone
+# does not risk an accidental post. tiktok cannot be promoted until
+# integrations/tiktok.py is real (see that file).
+tier_override:
+  instagram: 2
+  facebook: 2
+  tiktok: 3
+
+# recent_topics lookback window for plan_daily_content()'s no-repeat rule.
+lookback_days: 14
