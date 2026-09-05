@@ -6,160 +6,191 @@
 
   .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
     padding: 0 var(--spacing-xl);
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
   }
 
   .category-card {
-    background: var(--color-card-bg);
-    border-radius: 16px;
-    border: 1px solid var(--color-border);
-    border-top: 3px solid;
+    position: relative;
+    border-radius: 20px;
     overflow: hidden;
-    transition: all 0.35s cubic-bezier(0.23, 1, 0.320, 1);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    min-height: 380px;
+    height: 480px;
     text-decoration: none;
-    color: inherit;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
-
-  .category-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.03) 100%);
-    pointer-events: none;
-    z-index: 1;
+    color: white;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   }
 
   .category-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    transform: translateY(-16px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  }
+
+  .category-card-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    z-index: 3;
   }
 
   .category-visual {
-    flex: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     background-size: cover;
     background-position: center;
-    position: relative;
     overflow: hidden;
-    min-height: 220px;
+    font-size: 120px;
   }
 
   .category-visual img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
   }
 
   .category-card:hover .category-visual img {
-    transform: scale(1.05);
+    transform: scale(1.08);
   }
 
-  .image-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    animation: gradientShift 8s ease infinite;
-  }
-
-  .category-info {
-    padding: var(--spacing-lg) var(--spacing-md);
-    text-align: center;
-    flex: 1;
+  .category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    padding: 32px;
+    z-index: 2;
+  }
+
+  .category-info {
+    position: relative;
+    z-index: 2;
   }
 
   .category-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.75rem;
+    font-size: 32px;
     font-weight: 700;
-    color: var(--color-navy);
-    margin-bottom: var(--spacing-sm);
-    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
   }
 
   .category-desc {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    line-height: 1.7;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 16px;
     font-weight: 400;
   }
 
   .cta-arrow {
     display: inline-block;
-    margin-left: 0.5rem;
-    transition: transform 0.2s;
+    margin-left: 8px;
+    transition: opacity 0.3s ease;
+    opacity: 0.9;
   }
 
   .category-card:hover .cta-arrow {
-    transform: translateX(4px);
+    opacity: 1;
   }
 
-  /* Category-specific colors */
-  .category-card[data-category="parenting"] {
-    border-top-color: #E8725B;
+  /* Category-specific gradient overlays */
+  .category-card[data-category="parenting"] .category-visual {
+    background: linear-gradient(135deg, #E8725B 0%, #d8624b 50%, #c8523b 100%);
   }
-  .category-card[data-category="business"] {
-    border-top-color: #4A5F7F;
-  }
-  .category-card[data-category="finance"] {
-    border-top-color: #2D7A6B;
-  }
-  .category-card[data-category="wellness"] {
-    border-top-color: #6B9B7F;
-  }
-  .category-card[data-category="relationships"] {
-    border-top-color: #E8725B;
-  }
-  .category-card[data-category="growth"] {
-    border-top-color: #D4A574;
-  }
-  .category-card[data-category="productivity"] {
-    border-top-color: #F5D5C8;
-  }
-  .category-card[data-category="technology"] {
-    border-top-color: #4A5F7F;
+  .category-card[data-category="parenting"] .category-card-top-bar {
+    background: linear-gradient(90deg, #E8725B 0%, #d8624b 100%);
   }
 
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  .category-card[data-category="business"] .category-visual {
+    background: linear-gradient(135deg, #4A5F7F 0%, #3a4f6f 50%, #2a3f5f 100%);
+  }
+  .category-card[data-category="business"] .category-card-top-bar {
+    background: linear-gradient(90deg, #4A5F7F 0%, #3a4f6f 100%);
+  }
+
+  .category-card[data-category="finance"] .category-visual {
+    background: linear-gradient(135deg, #2D7A6B 0%, #1d6a5b 50%, #0d5a4b 100%);
+  }
+  .category-card[data-category="finance"] .category-card-top-bar {
+    background: linear-gradient(90deg, #2D7A6B 0%, #1d6a5b 100%);
+  }
+
+  .category-card[data-category="wellness"] .category-visual {
+    background: linear-gradient(135deg, #6B9B7F 0%, #5b8b6f 50%, #4b7b5f 100%);
+  }
+  .category-card[data-category="wellness"] .category-card-top-bar {
+    background: linear-gradient(90deg, #6B9B7F 0%, #5b8b6f 100%);
+  }
+
+  .category-card[data-category="relationships"] .category-visual {
+    background: linear-gradient(135deg, #E8725B 0%, #d8624b 50%, #c8523b 100%);
+  }
+  .category-card[data-category="relationships"] .category-card-top-bar {
+    background: linear-gradient(90deg, #E8725B 0%, #d8624b 100%);
+  }
+
+  .category-card[data-category="growth"] .category-visual {
+    background: linear-gradient(135deg, #D4A574 0%, #c49564 50%, #b48554 100%);
+  }
+  .category-card[data-category="growth"] .category-card-top-bar {
+    background: linear-gradient(90deg, #D4A574 0%, #c49564 100%);
+  }
+
+  .category-card[data-category="productivity"] .category-visual {
+    background: linear-gradient(135deg, #F5D5C8 0%, #E8B8A8 50%, #D89878 100%);
+  }
+  .category-card[data-category="productivity"] .category-card-top-bar {
+    background: linear-gradient(90deg, #F5D5C8 0%, #E8B8A8 100%);
+  }
+
+  .category-card[data-category="technology"] .category-visual {
+    background: linear-gradient(135deg, #1A2332 0%, #0a1322 50%, #000000 100%);
+  }
+  .category-card[data-category="technology"] .category-card-top-bar {
+    background: linear-gradient(90deg, #4A5F7F 0%, #3a4f6f 100%);
   }
 
   @media (max-width: 768px) {
     .categories-grid {
       grid-template-columns: 1fr;
       padding: 0 var(--spacing-md);
+      gap: 24px;
+    }
+    .category-card {
+      height: 400px;
     }
     .category-title {
-      font-size: 1.5rem;
+      font-size: 26px;
+    }
+    .category-overlay {
+      padding: 24px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .category-card, .category-card:hover .cta-arrow, .category-card:hover .category-visual img {
+    .category-card, .category-card:hover .category-visual img, .category-card:hover .cta-arrow {
       transition: none;
-    }
-    .image-placeholder {
-      animation: none;
     }
   }
 {%- endstyle -%}
@@ -168,18 +199,19 @@
   <div class="categories-grid">
     {%- for category in section.blocks -%}
       <a href="{{ category.settings.collection_url }}" class="category-card" data-category="{{ category.settings.category_slug }}">
+        <div class="category-card-top-bar"></div>
         <div class="category-visual">
           {%- if category.settings.image -%}
             <img src="{{ category.settings.image | img_url: '500x600' }}" alt="{{ category.settings.title }}" loading="lazy">
           {%- else -%}
-            <div class="image-placeholder" style="background: linear-gradient(135deg, {{ category.settings.color_1 }} 0%, {{ category.settings.color_2 }} 50%, {{ category.settings.color_3 }} 100%);">
-              {{ category.settings.emoji }}
-            </div>
+            {{ category.settings.emoji }}
           {%- endif -%}
         </div>
-        <div class="category-info">
-          <h3 class="category-title">{{ category.settings.title }}</h3>
-          <p class="category-desc">{{ category.settings.description }} <span class="cta-arrow">→</span></p>
+        <div class="category-overlay">
+          <div class="category-info">
+            <h3 class="category-title">{{ category.settings.title }}</h3>
+            <p class="category-desc">{{ category.settings.description }} <span class="cta-arrow">→</span></p>
+          </div>
         </div>
       </a>
     {%- endfor -%}
