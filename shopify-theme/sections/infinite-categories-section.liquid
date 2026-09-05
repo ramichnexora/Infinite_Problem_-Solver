@@ -1,0 +1,366 @@
+{%- style -%}
+  .infinite-categories-section {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    background: var(--color-bg);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    padding: 0 var(--spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .category-card {
+    background: var(--color-card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--color-border);
+    border-top: 3px solid;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.320, 1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.03) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .category-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  .category-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+  }
+
+  .category-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .category-card:hover .category-visual img {
+    transform: scale(1.05);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  .category-info {
+    padding: var(--spacing-lg) var(--spacing-md);
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .category-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.01em;
+  }
+
+  .category-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  .cta-arrow {
+    display: inline-block;
+    margin-left: 0.5rem;
+    transition: transform 0.2s;
+  }
+
+  .category-card:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Category-specific colors */
+  .category-card[data-category="parenting"] {
+    border-top-color: #E8725B;
+  }
+  .category-card[data-category="business"] {
+    border-top-color: #4A5F7F;
+  }
+  .category-card[data-category="finance"] {
+    border-top-color: #2D7A6B;
+  }
+  .category-card[data-category="wellness"] {
+    border-top-color: #6B9B7F;
+  }
+  .category-card[data-category="relationships"] {
+    border-top-color: #E8725B;
+  }
+  .category-card[data-category="growth"] {
+    border-top-color: #D4A574;
+  }
+  .category-card[data-category="productivity"] {
+    border-top-color: #F5D5C8;
+  }
+  .category-card[data-category="technology"] {
+    border-top-color: #4A5F7F;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @media (max-width: 768px) {
+    .categories-grid {
+      grid-template-columns: 1fr;
+      padding: 0 var(--spacing-md);
+    }
+    .category-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .category-card, .category-card:hover .cta-arrow, .category-card:hover .category-visual img {
+      transition: none;
+    }
+    .image-placeholder {
+      animation: none;
+    }
+  }
+{%- endstyle -%}
+
+<div class="infinite-categories-section">
+  <div class="categories-grid">
+    {%- for category in section.blocks -%}
+      <a href="{{ category.settings.collection_url }}" class="category-card" data-category="{{ category.settings.category_slug }}">
+        <div class="category-visual">
+          {%- if category.settings.image -%}
+            <img src="{{ category.settings.image | img_url: '500x600' }}" alt="{{ category.settings.title }}" loading="lazy">
+          {%- else -%}
+            <div class="image-placeholder" style="background: linear-gradient(135deg, {{ category.settings.color_1 }} 0%, {{ category.settings.color_2 }} 50%, {{ category.settings.color_3 }} 100%);">
+              {{ category.settings.emoji }}
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="category-info">
+          <h3 class="category-title">{{ category.settings.title }}</h3>
+          <p class="category-desc">{{ category.settings.description }} <span class="cta-arrow">→</span></p>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Infinite Problem Solver - Categories",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "Parenting"
+        },
+        {
+          "type": "text",
+          "id": "category_slug",
+          "label": "Category Slug (for styling)",
+          "default": "parenting"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Category Description",
+          "default": "Navigate motherhood, fatherhood, and raising resilient kids"
+        },
+        {
+          "type": "url",
+          "id": "collection_url",
+          "label": "Collection URL",
+          "default": "/collections/parenting"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji (if no image)",
+          "default": "👨‍👩‍👧"
+        },
+        {
+          "type": "color",
+          "id": "color_1",
+          "label": "Gradient Color 1",
+          "default": "#F5D5C8"
+        },
+        {
+          "type": "color",
+          "id": "color_2",
+          "label": "Gradient Color 2",
+          "default": "#E8B8A8"
+        },
+        {
+          "type": "color",
+          "id": "color_3",
+          "label": "Gradient Color 3",
+          "default": "#D89878"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infinite Categories",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Parenting",
+            "category_slug": "parenting",
+            "description": "Navigate motherhood, fatherhood, and raising resilient kids",
+            "collection_url": "/collections/parenting",
+            "emoji": "👨‍👩‍👧",
+            "color_1": "#F5D5C8",
+            "color_2": "#E8B8A8",
+            "color_3": "#D89878"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Business",
+            "category_slug": "business",
+            "description": "Build, scale, and manage a thriving enterprise",
+            "collection_url": "/collections/business",
+            "emoji": "💼",
+            "color_1": "#4A5F7F",
+            "color_2": "#3a4f6f",
+            "color_3": "#2a3f5f"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Finance",
+            "category_slug": "finance",
+            "description": "Master money, investments, and financial freedom",
+            "collection_url": "/collections/finance",
+            "emoji": "💰",
+            "color_1": "#2D7A6B",
+            "color_2": "#1d6a5b",
+            "color_3": "#0d5a4b"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Health & Wellness",
+            "category_slug": "wellness",
+            "description": "Optimize sleep, nutrition, fitness, and mental health",
+            "collection_url": "/collections/wellness",
+            "emoji": "🧘",
+            "color_1": "#6B9B7F",
+            "color_2": "#5b8b6f",
+            "color_3": "#4b7b5f"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Relationships",
+            "category_slug": "relationships",
+            "description": "Build deeper connections and healthy communication",
+            "collection_url": "/collections/relationships",
+            "emoji": "❤️",
+            "color_1": "#E8725B",
+            "color_2": "#d8624b",
+            "color_3": "#c8523b"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Personal Growth",
+            "category_slug": "growth",
+            "description": "Develop confidence, skills, and your best self",
+            "collection_url": "/collections/personal-growth",
+            "emoji": "🌱",
+            "color_1": "#D4A574",
+            "color_2": "#c49564",
+            "color_3": "#b48554"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Productivity",
+            "category_slug": "productivity",
+            "description": "Work smarter, focus better, and get more done",
+            "collection_url": "/collections/productivity",
+            "emoji": "✅",
+            "color_1": "#F5D5C8",
+            "color_2": "#E8B8A8",
+            "color_3": "#D89878"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "AI & Technology",
+            "category_slug": "technology",
+            "description": "Navigate AI, tools, and the future of work",
+            "collection_url": "/collections/technology",
+            "emoji": "🤖",
+            "color_1": "#1A2332",
+            "color_2": "#0a1322",
+            "color_3": "#000000"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
