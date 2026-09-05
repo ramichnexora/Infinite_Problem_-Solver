@@ -81,6 +81,14 @@ agents:
     docs: docs/roles/ai-product-research.md
     default_tier: 2
 
+  - id: list_building
+    module: agents.list_building_agent
+    class: ListBuildingAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-list-building.md
+    default_tier: 2
+
 # --- Reserved for future seats (not yet justified per docs/01-principles.md #8) ---
 # Add an entry here only when a task is recurring, specialization materially
 # improves quality, the workflow is documented as a playbook first, and
