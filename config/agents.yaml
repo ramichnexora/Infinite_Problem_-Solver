@@ -24,6 +24,18 @@ orchestrator:
   status: active
   docs: null
 
+human_agents:
+  - id: founder
+    name: Ramich Uddin
+    role: Founder / Final Approver
+    status: active
+    docs: docs/roles/human-founder.md
+    approval_tier: 3
+    notes: >
+      Human-in-the-loop for every Tier 3 (Human Sign-off) decision across all
+      seats — finance, hr_recruiting, and any Tier-2 seat escalation that
+      fails its confidence gate. Not an AI seat; does not run SOPs.
+
 agents:
   - id: support
     module: agents.support_agent
