@@ -45,23 +45,38 @@ def load_config() -> dict[str, Any]:
 
 
 def build_channel_publishers(config: dict[str, Any]) -> dict[str, Any]:
-    """Only build a live client for a channel actually promoted past Tier 3 -
-    this avoids raising on a missing env var for a channel nobody asked to
-    auto-publish to yet (including tiktok, which is never promotable today)."""
+    """Only build a live client for a channel actually promoted past Tier 3.
+
+    A promoted channel whose credentials aren't set yet must NOT abort the
+    whole run - automation/daily-social-post.yaml explicitly promises "publish()
+    still safely falls back to Tier 3 for that channel" when env vars are
+    missing. That promise only holds if we swallow the missing-credential
+    error here per channel (and just don't register a publisher for it) -
+    letting it propagate crashes main() before publish()'s own Tier 3
+    fallback ever runs, for every channel, every day, until credentials are
+    set (see tasks/ - 2026-09-06 daily run)."""
     tier_override = config.get("tier_override", {})
     publishers: dict[str, Any] = {}
 
     if _TIER_BY_INT.get(tier_override.get("instagram", 3)) != Tier.HUMAN_APPROVAL:
         from integrations.instagram import client_from_env as ig_client
 
-        client = ig_client()
-        publishers["instagram"] = client.publish
+        try:
+            client = ig_client()
+        except RuntimeError as exc:
+            print(f"[instagram] promoted but not configured, falling back to Tier 3: {exc}", file=sys.stderr)
+        else:
+            publishers["instagram"] = client.publish
 
     if _TIER_BY_INT.get(tier_override.get("facebook", 3)) != Tier.HUMAN_APPROVAL:
         from integrations.facebook import client_from_env as fb_client
 
-        client = fb_client()
-        publishers["facebook"] = client.publish
+        try:
+            client = fb_client()
+        except RuntimeError as exc:
+            print(f"[facebook] promoted but not configured, falling back to Tier 3: {exc}", file=sys.stderr)
+        else:
+            publishers["facebook"] = client.publish
 
     # tiktok intentionally never added - see integrations/tiktok.py
     return publishers
