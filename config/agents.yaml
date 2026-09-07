@@ -101,6 +101,14 @@ agents:
     docs: docs/roles/ai-list-building.md
     default_tier: 2
 
+  - id: digital_product
+    module: agents.digital_product_agent
+    class: DigitalProductAgent
+    parent: mili
+    status: active
+    docs: docs/roles/ai-digital-product.md
+    default_tier: 3
+
 # --- Reserved for future seats (not yet justified per docs/01-principles.md #8) ---
 # Add an entry here only when a task is recurring, specialization materially
 # improves quality, the workflow is documented as a playbook first, and
