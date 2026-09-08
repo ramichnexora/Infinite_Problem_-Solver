@@ -15,12 +15,23 @@ then QA-gate that spec before a human ever sees it as "ready."
    honesty, audience fit, and completeness. Launch-ready requires ≥80 overall
    and no dimension below 60.
 
+## Execution (separate from the SOPs above)
+
+`integrations/shopify_admin.py` + `run_create_shopify_product.py` give this
+seat's output a real execution path — but neither is called automatically by
+`draft_product_spec()` or `qa_check()`. Creating a product is a manual step:
+save the approved spec as JSON, then run
+`python run_create_shopify_product.py path/to/spec.json`. The created product
+is always `DRAFT` — the script has no publish function on purpose. Requires
+`SHOPIFY_STORE_DOMAIN` and `SHOPIFY_ADMIN_ACCESS_TOKEN` (a Shopify custom-app
+Admin API token, never hardcoded).
+
 ## What this agent does NOT do
 
-- Does not create the Shopify product itself, set live pricing, or publish
-  anything. That stays a Tier 3, founder-triggered action — same standing rule
-  as `docs/roles/human-founder.md`'s outbound-communication policy, extended
-  here to new product launches.
+- The SOPs never create the Shopify product themselves, set live pricing, or
+  publish anything — that's always the separate, founder-triggered step
+  above. Same standing rule as `docs/roles/human-founder.md`'s
+  outbound-communication policy, extended here to new product launches.
 - Does not invent guarantees. A spec with an unconfirmed refund policy is
   incomplete by design until the founder confirms one (see the Postpartum
   Sleep Handbook precedent, 2026-09-06 — its stated refund policy didn't match
