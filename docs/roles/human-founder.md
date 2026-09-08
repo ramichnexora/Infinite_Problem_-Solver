@@ -18,15 +18,29 @@ Hold final sign-off (Tier 3 — `docs/03-governance-and-escalation.md`) on:
   email sends, ad spend, public posts) until that channel has a proven
   track record at Tier 2
 
-## Standing rule — email/social sends (confirmed 2026-09-05)
+## Standing rule — email/social sends
 
-No email (nurture sequence, reply_email output, campaign send) and no social
-reply (reply_social_comment output) goes out to a real recipient without the
-founder seeing the exact drafted text first and giving explicit go-ahead in
-chat. This applies even after IG/FB/email-provider credentials are connected
-and even for Tier 1/2 seats that would otherwise auto-execute — for outbound
-communication specifically, every send is Tier 3 until the founder says
-otherwise. The agent shares the draft, waits, and only sends after an
+**Superseded 2026-09-08** for inbound email replies specifically: the
+founder explicitly asked for real-time auto-reply on the support inbox
+after being told the tradeoffs (no per-message review, and no true
+unattended background automation exists yet since Gmail connector access
+is only available inside an active chat session, not in a fired Routine).
+
+`SupportAgent.reply_email()` now runs at its coded default
+(`Tier.AUTONOMOUS`) when checked from within an active session with Gmail
+access: drafted replies send without asking the founder first, **except**
+the hard-escalation cases already coded into `_hard_escalation_reason()` —
+legal/security language, refund requests over the $100 threshold, an
+enterprise/strategic account showing cancellation intent, or a
+repeated-contact/hostile customer. Those still hold for founder review, no
+exception.
+
+Nurture-sequence campaign sends and social-media replies (`reply_social_comment`)
+are NOT covered by this change — those still follow the original rule
+below: the founder sees the exact drafted text and gives explicit go-ahead
+before anything sends. This applies even after IG/FB/email-provider
+credentials are connected and even for Tier 1/2 seats that would otherwise
+auto-execute. The agent shares the draft, waits, and only sends after an
 explicit "yes/send it" reply — not a general "sounds good" earlier in the
 conversation.
 
