@@ -37,7 +37,7 @@ Respond with JSON only, no prose, no code fences:
 
 
 class SalesAgent(Agent):
-    seat = "ai-sales-agent"
+    seat = "sales"
 
     def _hard_escalation_reason(self, lead: dict[str, Any]) -> str | None:
         text = f"{lead.get('notes', '')} {lead.get('message', '')}"

@@ -36,7 +36,7 @@ Respond with JSON only, no prose, no code fences:
 
 
 class ProductResearchAgent(Agent):
-    seat = "ai-product-research-agent"
+    seat = "product_research"
 
     def __init__(self, llm, systemic_threshold: int = 2, **kwargs: Any):
         super().__init__(llm, **kwargs)

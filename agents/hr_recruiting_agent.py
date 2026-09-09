@@ -39,7 +39,7 @@ Respond with JSON only, no prose, no code fences:
 
 
 class HRRecruitingAgent(Agent):
-    seat = "ai-hr-recruiting-agent"
+    seat = "hr_recruiting"
 
     def _hard_escalation_reason(self, candidate: dict[str, Any]) -> str | None:
         text = f"{candidate.get('notes', '')} {candidate.get('message', '')}"

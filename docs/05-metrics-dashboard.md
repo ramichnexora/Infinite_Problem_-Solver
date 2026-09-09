@@ -17,6 +17,10 @@ Leadership should be able to answer these questions weekly without pinging anyon
 This table is the top-level dashboard. Each row links to the fuller KPI set defined in
 that seat's role file under `docs/roles/`.
 
+For a content-commerce brand, the Marketing row's "content-attributed leads/pipeline"
+reads as email subscribers, store visits, product sales, and returning customers —
+never raw views/reach on their own. See `docs/examples/ai-education-content-brand.md`.
+
 ## System-health metrics (across all seats)
 
 These aren't about any one function — they're about whether the AI Company OS itself

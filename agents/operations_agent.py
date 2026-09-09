@@ -31,7 +31,7 @@ Respond with JSON only, no prose, no code fences:
 
 
 class OperationsAgent(Agent):
-    seat = "ai-operations-agent"
+    seat = "operations"
 
     def __init__(
         self,
