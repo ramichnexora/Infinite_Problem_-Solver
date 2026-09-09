@@ -18,6 +18,7 @@ run the day-to-day.
 - [`docs/07-running-the-agents.md`](docs/07-running-the-agents.md) — working agent code for all 7 seats: setup, running, testing, extending
 - [`docs/08-telegram-bot.md`](docs/08-telegram-bot.md) — a real Telegram channel wired to the AI Support Agent
 - [`docs/09-deploying-the-bot.md`](docs/09-deploying-the-bot.md) — running the bot on a free host with no terminal required
+- [`docs/10-brand-identity.md`](docs/10-brand-identity.md) — name, positioning, tagline, voice, and visual system
 
 ## Status
 
