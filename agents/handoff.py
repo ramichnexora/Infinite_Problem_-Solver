@@ -111,7 +111,7 @@ def pending_handoffs(inbox: str | Path = DEFAULT_INBOX) -> list[Path]:
     result = []
     for path in sorted(inbox.glob("*.md")):
         head = path.read_text(encoding="utf-8")[:400]
-        if "status: pending" in head:
+        if head.startswith("---\nseat:") and "status: pending" in head:
             result.append(path)
     return result
 
