@@ -101,7 +101,7 @@ Respond with JSON only, no prose, no code fences:
 
 
 class SupportAgent(Agent):
-    seat = "ai-support-agent"
+    seat = "support"
 
     def __init__(
         self,

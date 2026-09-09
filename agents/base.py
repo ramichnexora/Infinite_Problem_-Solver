@@ -10,16 +10,24 @@ Two layers of escalation, matching docs/03-governance-and-escalation.md:
    or sets escalate=true, that's still routed to a human even though no
    hard guardrail fired.
 
+3. Hand-off fallback (v2) - if the model layer cannot be reached at all
+   (no API key, network, malformed response) the full prompt is written to
+   tasks/inbox/ (agents/handoff.py) and the SOP escalates to Tier 3, so the
+   Claude Code session or a human does the work. An agent never "just
+   stays" - see docs/10-fallback-protocol.md.
+
 Either path skips execution and lands in the EscalationQueue instead;
 everything is written to the AuditLog regardless of outcome.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Optional
 
 from .audit import AuditLog, AuditRecord
 from .escalation import EscalationItem, EscalationQueue, Tier
+from .handoff import DEFAULT_INBOX, write_handoff
 from .llm import LLMClient, parse_json_response
 
 
@@ -40,11 +48,13 @@ class Agent:
         audit_log: AuditLog | None = None,
         escalation_queue: EscalationQueue | None = None,
         confidence_threshold: float = 0.7,
+        handoff_inbox: str | Path = DEFAULT_INBOX,
     ):
         self.llm = llm
         self.audit_log = audit_log or AuditLog()
         self.escalation_queue = escalation_queue or EscalationQueue()
         self.confidence_threshold = confidence_threshold
+        self.handoff_inbox = Path(handoff_inbox)
 
     def run_sop(
         self,
@@ -69,8 +79,36 @@ class Agent:
             self._finish(sop, inputs, result)
             return result
 
-        raw = self.llm.complete(system=system_prompt, user=user_prompt)
-        output = parse_json_response(raw)
+        cause: str | None = None
+        if getattr(self.llm, "unavailable", False):
+            cause = getattr(self.llm, "cause", "model unavailable")
+        else:
+            try:
+                raw = self.llm.complete(system=system_prompt, user=user_prompt)
+                output = parse_json_response(raw)
+            except AssertionError:
+                raise  # test doubles that must never be called
+            except Exception as exc:  # noqa: BLE001 - any model failure becomes a hand-off
+                cause = f"{type(exc).__name__}: {exc}"
+
+        if cause is not None:
+            handoff = write_handoff(
+                seat=self.seat,
+                sop=sop,
+                cause=cause,
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                inputs=inputs,
+                inbox=self.handoff_inbox,
+            )
+            result = AgentResult(
+                output={"escalate": True, "reason": handoff.reason, "handoff": str(handoff.path)},
+                tier=Tier.HUMAN_APPROVAL,
+                executed=False,
+                escalation_reason=handoff.reason,
+            )
+            self._finish(sop, inputs, result)
+            return result
 
         confidence = float(output.get("confidence", 0.0))
         model_wants_escalation = bool(output.get("escalate", False))

@@ -67,3 +67,15 @@ moves to publish-then-notify; sensitive topics stay in review permanently.
 content-commerce brand (Shopify + digital products) end to end: the audience framework,
 the content value test, a daily multi-platform content factory, and how the weekly/
 monthly/annual reporting cadence plugs into `docs/05-metrics-dashboard.md`.
+
+## v2 — Never idle: fallback rule
+
+This seat never idles. If `agents/` cannot reach a model (no
+`ANTHROPIC_API_KEY`, network or response failure) the SOP is written to
+`tasks/inbox/` as a hand-off with its full prompt and escalates to Tier 3
+(`agents/handoff.py`, `docs/10-fallback-protocol.md`). The matching Claude Code
+subagent (`.claude/agents/`) — or a human — completes it with the same inputs
+and labels the output `[manual fallback]`. Tier 3 approvals are unchanged.
+
+Strategic frame: `docs/EXECUTIVE_OPERATING_SYSTEM.md` — Bottleneck Rule (§41),
+Billion-Dollar Filter (§46).

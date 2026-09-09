@@ -29,7 +29,7 @@ from typing import Any
 import yaml
 
 from agents.escalation import Tier
-from agents.llm import AnthropicLLMClient
+from agents.llm import build_llm_client
 from agents.marketing_agent import MarketingAgent
 
 ROOT = Path(__file__).parent
@@ -147,7 +147,7 @@ def main() -> int:
         return 1
 
     agent = MarketingAgent(
-        AnthropicLLMClient(),
+        build_llm_client(),
         channel_publishers=channel_publishers,
         tier_override=tier_override,
     )
