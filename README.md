@@ -19,6 +19,7 @@ run the day-to-day.
 - [`docs/08-telegram-bot.md`](docs/08-telegram-bot.md) — a real Telegram channel wired to the AI Support Agent
 - [`docs/09-deploying-the-bot.md`](docs/09-deploying-the-bot.md) — running the bot on a free host with no terminal required
 - [`docs/10-fallback-protocol.md`](docs/10-fallback-protocol.md) — v2: an agent that cannot run hands the job to the Claude Code session instead of stopping
+- [`docs/10-brand-identity.md`](docs/10-brand-identity.md) — name, positioning, tagline, voice, and visual system
 - [`docs/EXECUTIVE_OPERATING_SYSTEM.md`](docs/EXECUTIVE_OPERATING_SYSTEM.md) — the strategic constitution every agent reasons from
 - [`docs/CEO_HIGH_COMMAND.md`](docs/CEO_HIGH_COMMAND.md) — v2.0: the orchestration/execution OS (agent routing, decision protocol, founder-communication format) layered on top of it
 - [`docs/examples/ai-education-content-brand.md`](docs/examples/ai-education-content-brand.md) — worked example: the AI Marketing Agent applied to a content-commerce brand (daily content factory, content value test, funnel, reporting cadence)
