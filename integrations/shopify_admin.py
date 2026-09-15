@@ -107,6 +107,56 @@ class ShopifyAdminClient:
             raise RuntimeError(f"Shopify price update errors: {result['userErrors']}")
         return result["productVariants"][0]
 
+    def verify_product(self, product_id: str, expected: dict[str, Any]) -> dict[str, Any]:
+        """Re-read a created product and confirm the fields that were meant to land actually
+        did - the shopify_product seat's post-execution QA step, before the "SHOPIFY
+        DEPLOYMENT REPORT" is shown to a human. Never mutates anything."""
+        data = self._graphql(
+            """
+            query VerifyProduct($id: ID!) {
+              product(id: $id) {
+                id title descriptionHtml productType status tags handle
+                variants(first: 1) { edges { node { id price } } }
+              }
+            }
+            """,
+            {"id": product_id},
+        )
+        product = data["product"]
+        if product is None:
+            raise RuntimeError(f"Shopify product {product_id} not found during verification")
+
+        mismatches: list[str] = []
+        if expected.get("title") and product["title"] != expected["title"]:
+            mismatches.append(f"title: expected {expected['title']!r}, got {product['title']!r}")
+        if expected.get("price_usd") is not None:
+            variant_price = product["variants"]["edges"][0]["node"]["price"] if product["variants"]["edges"] else None
+            if variant_price is not None and float(variant_price) != float(expected["price_usd"]):
+                mismatches.append(f"price: expected {expected['price_usd']}, got {variant_price}")
+        if product["status"] != "DRAFT":
+            mismatches.append(f"status: expected DRAFT, got {product['status']!r}")
+
+        return {"product": product, "mismatches": mismatches, "verified": not mismatches}
+
+    def publish_product(self, product_id: str) -> dict[str, Any]:
+        """Flip a product DRAFT -> ACTIVE. Only ever called after an explicit human
+        approval (ShopifyProductAgent.publish_product_confirmed()) - never automatically."""
+        data = self._graphql(
+            """
+            mutation PublishProduct($id: ID!, $input: ProductUpdateInput!) {
+              productUpdate(product: $input) {
+                product { id status }
+                userErrors { field message }
+              }
+            }
+            """,
+            {"id": product_id, "input": {"id": product_id, "status": "ACTIVE"}},
+        )
+        result = data["productUpdate"]
+        if result["userErrors"]:
+            raise RuntimeError(f"Shopify publish errors: {result['userErrors']}")
+        return {"product_id": result["product"]["id"], "status": result["product"]["status"]}
+
 
 def client_from_env() -> ShopifyAdminClient:
     """Build a client from SHOPIFY_STORE_DOMAIN / SHOPIFY_ADMIN_ACCESS_TOKEN.

@@ -75,5 +75,104 @@ class TestCreateProductDraft(unittest.TestCase):
             client.create_product_draft({"title": "", "description_html": ""})
 
 
+class TestVerifyProduct(unittest.TestCase):
+    def _client_with_mock_session(self, responses):
+        session = MagicMock()
+        session.post.side_effect = responses
+        return ShopifyAdminClient("test-store.myshopify.com", "shpat_test", session=session)
+
+    def test_verified_true_when_fields_match(self):
+        resp = MagicMock()
+        resp.json.return_value = {
+            "data": {
+                "product": {
+                    "id": "gid://shopify/Product/1",
+                    "title": "Test Product",
+                    "descriptionHtml": "<p>desc</p>",
+                    "productType": "Digital Guide",
+                    "status": "DRAFT",
+                    "tags": [],
+                    "handle": "test-product",
+                    "variants": {"edges": [{"node": {"id": "gid://v1", "price": "29.00"}}]},
+                }
+            }
+        }
+        client = self._client_with_mock_session([resp])
+
+        result = client.verify_product(
+            "gid://shopify/Product/1", {"title": "Test Product", "price_usd": 29.00}
+        )
+
+        self.assertTrue(result["verified"])
+        self.assertEqual(result["mismatches"], [])
+
+    def test_flags_mismatch_instead_of_silently_passing(self):
+        resp = MagicMock()
+        resp.json.return_value = {
+            "data": {
+                "product": {
+                    "id": "gid://shopify/Product/1",
+                    "title": "Wrong Title",
+                    "descriptionHtml": "<p>desc</p>",
+                    "productType": "Digital Guide",
+                    "status": "DRAFT",
+                    "tags": [],
+                    "handle": "test-product",
+                    "variants": {"edges": [{"node": {"id": "gid://v1", "price": "19.00"}}]},
+                }
+            }
+        }
+        client = self._client_with_mock_session([resp])
+
+        result = client.verify_product(
+            "gid://shopify/Product/1", {"title": "Test Product", "price_usd": 29.00}
+        )
+
+        self.assertFalse(result["verified"])
+        self.assertTrue(any("title" in m for m in result["mismatches"]))
+        self.assertTrue(any("price" in m for m in result["mismatches"]))
+
+    def test_raises_when_product_not_found(self):
+        resp = MagicMock()
+        resp.json.return_value = {"data": {"product": None}}
+        client = self._client_with_mock_session([resp])
+
+        with self.assertRaises(RuntimeError):
+            client.verify_product("gid://shopify/Product/missing", {"title": "T"})
+
+
+class TestPublishProduct(unittest.TestCase):
+    def _client_with_mock_session(self, responses):
+        session = MagicMock()
+        session.post.side_effect = responses
+        return ShopifyAdminClient("test-store.myshopify.com", "shpat_test", session=session)
+
+    def test_flips_draft_to_active(self):
+        resp = MagicMock()
+        resp.json.return_value = {
+            "data": {
+                "productUpdate": {
+                    "product": {"id": "gid://shopify/Product/1", "status": "ACTIVE"},
+                    "userErrors": [],
+                }
+            }
+        }
+        client = self._client_with_mock_session([resp])
+
+        result = client.publish_product("gid://shopify/Product/1")
+
+        self.assertEqual(result["status"], "ACTIVE")
+
+    def test_raises_on_user_errors(self):
+        resp = MagicMock()
+        resp.json.return_value = {
+            "data": {"productUpdate": {"product": None, "userErrors": [{"field": ["id"], "message": "not found"}]}}
+        }
+        client = self._client_with_mock_session([resp])
+
+        with self.assertRaises(RuntimeError):
+            client.publish_product("gid://shopify/Product/missing")
+
+
 if __name__ == "__main__":
     unittest.main()
