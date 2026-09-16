@@ -65,3 +65,7 @@ logs/
 
 # Local environment
 .env
+
+# Claude Code worktrees and isolated artifacts (per CLAUDE.md)
+.claude/
+_tasks/

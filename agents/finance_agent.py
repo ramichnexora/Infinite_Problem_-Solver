@@ -30,7 +30,7 @@ Respond with JSON only, no prose, no code fences:
 
 
 class FinanceAgent(Agent):
-    seat = "ai-finance-agent"
+    seat = "finance"
 
     def _hard_escalation_reason(self, transaction: dict[str, Any]) -> str | None:
         # Outbound payments are never autonomous, at any amount, regardless of

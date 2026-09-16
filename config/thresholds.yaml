@@ -1,0 +1,19 @@
+# Externalized thresholds. agents/base.py still defaults confidence_threshold
+# to 0.7 internally (unchanged, untouched) — new code (MILI, registry-driven
+# agents) should read from here instead of hardcoding, so tuning doesn't
+# require a code change.
+
+confidence_threshold: 0.7
+
+escalation_sla:
+  default_business_days: 1
+  # Per-seat overrides, matching docs/03-governance-and-escalation.md's
+  # "Setting thresholds" section — fill in as roles define their own SLA.
+
+tiers:
+  1: AUTONOMOUS
+  2: NOTIFY
+  3: HUMAN_APPROVAL
+
+# Dollar/severity thresholds belong in each role file's escalation section
+# (docs/roles/*.md), per the existing governance doc — not duplicated here.

@@ -60,3 +60,15 @@ integration list.
 **Draft-and-review**: agent drafts sequences and qualification scores; sales leader
 approves the first two weeks of output before the agent is promoted to send/book
 autonomously. See `docs/06-implementation-roadmap.md`.
+
+## v2 — Never idle: fallback rule
+
+This seat never idles. If `agents/` cannot reach a model (no
+`ANTHROPIC_API_KEY`, network or response failure) the SOP is written to
+`tasks/inbox/` as a hand-off with its full prompt and escalates to Tier 3
+(`agents/handoff.py`, `docs/10-fallback-protocol.md`). The matching Claude Code
+subagent (`.claude/agents/`) — or a human — completes it with the same inputs
+and labels the output `[manual fallback]`. Tier 3 approvals are unchanged.
+
+Strategic frame: `docs/EXECUTIVE_OPERATING_SYSTEM.md` — Bottleneck Rule (§41),
+Billion-Dollar Filter (§46).

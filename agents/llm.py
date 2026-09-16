@@ -53,6 +53,24 @@ class AnthropicLLMClient:
         return "".join(block.text for block in response.content if block.type == "text")
 
 
+def build_llm_client(model: str = DEFAULT_MODEL, max_tokens: int = 1024) -> LLMClient:
+    """Return a real Anthropic client when it can be built, otherwise a
+    HandoffLLMClient so the agent hands the job off instead of crashing.
+
+    The fallback is announced on stderr once so an operator never mistakes a
+    hand-off run for a live one.
+    """
+    import sys
+
+    from .handoff import HandoffLLMClient
+
+    try:
+        return AnthropicLLMClient(model=model, max_tokens=max_tokens)
+    except RuntimeError as exc:
+        print(f"[fallback] {exc} -> jobs will be written to tasks/inbox/", file=sys.stderr)
+        return HandoffLLMClient(cause=str(exc))
+
+
 _JSON_FENCE = re.compile(r"```(?:json)?\s*(.*?)\s*```", re.DOTALL)
 
 

@@ -58,3 +58,15 @@ ATS (system of record), calendar scheduling, and the onboarding checklist/HRIS �
 **Draft-and-review for screening decisions, autonomous for logistics**: scheduling and
 onboarding-checklist tracking start autonomous; screen/advance decisions are reviewed
 by the hiring manager until the scorecard's conversion rate is validated as calibrated.
+
+## v2 — Never idle: fallback rule
+
+This seat never idles. If `agents/` cannot reach a model (no
+`ANTHROPIC_API_KEY`, network or response failure) the SOP is written to
+`tasks/inbox/` as a hand-off with its full prompt and escalates to Tier 3
+(`agents/handoff.py`, `docs/10-fallback-protocol.md`). The matching Claude Code
+subagent (`.claude/agents/`) — or a human — completes it with the same inputs
+and labels the output `[manual fallback]`. Tier 3 approvals are unchanged.
+
+Strategic frame: `docs/EXECUTIVE_OPERATING_SYSTEM.md` — Bottleneck Rule (§41),
+Billion-Dollar Filter (§46).

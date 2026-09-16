@@ -1,0 +1,87 @@
+# Lead Collection Automation — New Parents Email List
+# Target: 1000 new parents from US + UK
+# Sources: organic capture, community partnerships, ad-driven signups
+# Compliance: GDPR (UK), CAN-SPAM (US), double opt-in
+
+id: collect-new-parents-emails
+trigger: manual  # Runs on-demand via run_lead_collection.py
+target_seat: sales  # Delegate to sales agent for list segmentation
+sop_sequence:
+  - collect_from_social_followers
+  - collect_from_community_groups
+  - collect_from_ad_campaigns
+  - segment_by_location
+  - validate_emails
+  - sync_to_sheets
+
+sources:
+  facebook_groups:
+    - name: "Postpartum Support & New Parent Groups"
+      regions: [us, uk]
+      engagement_minimum: 5000_members
+      method: community_partnerships  # Ask for recommendation, not scrape
+
+  instagram:
+    - engagement_source: followers_from_postpartum_handbook_posts
+    - cta_type: email_capture_form
+    - regions: [us, uk]
+
+  tiktok:
+    - engagement_source: video_viewers_of_parenting_content
+    - cta_type: link_in_bio_to_landing_page
+    - regions: [us, uk]
+
+  landing_page:
+    - url: "https://infinite-problem-solver.com/new-parent-resources"
+    - offer: free_5_day_email_series
+    - cta: "Get the Postpartum Sleep Quick-Start Guide"
+
+  partnerships:
+    - obgyn_clinics_us: 10_locations
+    - midwife_collectives_uk: 5_groups
+    - postpartum_recovery_centers: 3_centers
+    - method: referral_partnerships_with_consent
+
+# Sheet configuration
+google_sheets:
+  sheet_name: "New Parents Email List — US + UK"
+  sheet_id: "auto-generate"  # Will be created on first run
+  tabs:
+    - name: "Raw Signups"
+      columns: [timestamp, email, name, location_country, source, zip_code, lifecycle_stage, consent_level, notes]
+    - name: "Validated List"
+      columns: [email, name, country, state_province, source, signup_date, email_verified, segment, status]
+    - name: "Segmentation"
+      columns: [segment_name, criteria, count, engagement_score, recommended_cta]
+    - name: "Analytics"
+      columns: [date, signups_today, total_signups, us_count, uk_count, bounce_rate, engagement_rate]
+
+# Compliance & segmentation
+segments:
+  expectant_parents:
+    criteria: "signup within 6 months before due date"
+    email_series: "expecting-parent-track"
+
+  new_parents_0_6m:
+    criteria: "baby born 0-6 months ago"
+    email_series: "newborn-essentials"
+    cta_product: "Postpartum Sleep Handbook"
+
+  new_parents_6_12m:
+    criteria: "baby born 6-12 months ago"
+    email_series: "first-year-survival"
+
+  established_parents:
+    criteria: "baby born 1+ years ago"
+    email_series: "toddler-phase"
+
+# Sync targets
+sync_targets:
+  mailchimp_audience: "new-parents-us-uk"  # Email service integration
+  crm_tags: [new_parent, postpartum_interested, location_us_uk]
+
+# Quality gates
+quality_checks:
+  min_email_validity: 95%  # 95% of emails must pass validation
+  min_location_confirmation: 80%  # 80% must have confirmed location
+  max_duplicate_rate: 2%  # <2% duplicates across source

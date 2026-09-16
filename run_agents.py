@@ -11,7 +11,8 @@ Usage:
     python run_agents.py hr          # screen data/candidates.sample.json
     python run_agents.py all         # run everything
 
-Requires ANTHROPIC_API_KEY to be set - see docs/07-running-the-agents.md.
+Uses ANTHROPIC_API_KEY when set - see docs/07-running-the-agents.md. Without it
+every SOP is written to tasks/inbox/ as a hand-off instead (docs/10-fallback-protocol.md).
 Every run appends to logs/audit.jsonl and, for anything escalated,
 logs/escalations.jsonl.
 """
@@ -24,7 +25,7 @@ from pathlib import Path
 
 from agents.finance_agent import FinanceAgent
 from agents.hr_recruiting_agent import HRRecruitingAgent
-from agents.llm import AnthropicLLMClient
+from agents.llm import build_llm_client
 from agents.marketing_agent import MarketingAgent
 from agents.operations_agent import OperationsAgent
 from agents.product_research_agent import ProductResearchAgent
@@ -105,7 +106,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    llm = AnthropicLLMClient()
+    llm = build_llm_client()
 
     if args.agent in ("support", "all"):
         run_support(llm)

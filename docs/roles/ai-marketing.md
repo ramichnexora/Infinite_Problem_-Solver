@@ -24,7 +24,11 @@ publishing cadence, without a human writing or scheduling each piece by hand.
 1. **Plan** — maintain a rolling 4-week content calendar mapped to campaign goals;
    flag gaps to the marketing leader weekly.
 2. **Draft** — produce a draft in brand voice for each calendar slot; include a
-   suggested distribution channel and CTA.
+   suggested distribution channel and CTA. Every draft must clear the content value
+   test — teach something, save time, help make money, reduce stress, increase
+   productivity, help avoid a mistake, solve a real problem, simplify something
+   complex, or build confidence. A brief that can't clear it doesn't get drafted as
+   filler; it's flagged back to the marketing leader instead.
 3. **Review gate** — every draft goes through the review tier defined by its autonomy
    status (see below) before publishing.
 4. **Publish** — schedule/publish approved content at the planned time; log the
@@ -56,3 +60,22 @@ brand style guide as a reference document — see `docs/04-tech-stack.md`.
 **Draft-and-review**: every piece is reviewed by the marketing leader before
 publishing until a 30-day clean run, then routine content (calendar-planned, on-brand)
 moves to publish-then-notify; sensitive topics stay in review permanently.
+
+## Worked example
+
+`docs/examples/ai-education-content-brand.md` walks through this mandate applied to a
+content-commerce brand (Shopify + digital products) end to end: the audience framework,
+the content value test, a daily multi-platform content factory, and how the weekly/
+monthly/annual reporting cadence plugs into `docs/05-metrics-dashboard.md`.
+
+## v2 — Never idle: fallback rule
+
+This seat never idles. If `agents/` cannot reach a model (no
+`ANTHROPIC_API_KEY`, network or response failure) the SOP is written to
+`tasks/inbox/` as a hand-off with its full prompt and escalates to Tier 3
+(`agents/handoff.py`, `docs/10-fallback-protocol.md`). The matching Claude Code
+subagent (`.claude/agents/`) — or a human — completes it with the same inputs
+and labels the output `[manual fallback]`. Tier 3 approvals are unchanged.
+
+Strategic frame: `docs/EXECUTIVE_OPERATING_SYSTEM.md` — Bottleneck Rule (§41),
+Billion-Dollar Filter (§46).

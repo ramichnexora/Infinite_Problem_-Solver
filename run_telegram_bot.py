@@ -15,7 +15,7 @@ import os
 import sys
 from pathlib import Path
 
-from agents.llm import AnthropicLLMClient
+from agents.llm import build_llm_client
 from agents.support_agent import SupportAgent
 from integrations.telegram_bot import TelegramClient, run_bot
 
@@ -33,7 +33,7 @@ def main() -> int:
         return 1
 
     kb = (DATA_DIR / "knowledge_base.md").read_text(encoding="utf-8")
-    agent = SupportAgent(AnthropicLLMClient(), knowledge_base=kb)
+    agent = SupportAgent(build_llm_client(), knowledge_base=kb)
     client = TelegramClient(token)
     ops_chat_id = os.environ.get("TELEGRAM_OPS_CHAT_ID")
     if not ops_chat_id:

@@ -61,4 +61,4 @@ def test_low_confidence_message_escalates_with_ops_notification(audit_log, escal
 
     pending = escalation_queue.pending()
     assert len(pending) == 1
-    assert pending[0]["seat"] == "ai-support-agent"
+    assert pending[0]["seat"] == "support"
