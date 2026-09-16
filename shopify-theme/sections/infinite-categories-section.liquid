@@ -1,0 +1,398 @@
+{%- style -%}
+  .infinite-categories-section {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    background: var(--color-bg);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    padding: 0 var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .category-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  .category-card:hover {
+    transform: translateY(-16px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  }
+
+  .category-card-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    z-index: 3;
+  }
+
+  .category-visual {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    font-size: 120px;
+  }
+
+  .category-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .category-card:hover .category-visual img {
+    transform: scale(1.08);
+  }
+
+  .category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px;
+    z-index: 2;
+  }
+
+  .category-info {
+    position: relative;
+    z-index: 2;
+  }
+
+  .category-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+
+  .category-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .cta-arrow {
+    display: inline-block;
+    margin-left: 8px;
+    transition: opacity 0.3s ease;
+    opacity: 0.9;
+  }
+
+  .category-card:hover .cta-arrow {
+    opacity: 1;
+  }
+
+  /* Category-specific gradient overlays */
+  .category-card[data-category="parenting"] .category-visual {
+    background: linear-gradient(135deg, #E8725B 0%, #d8624b 50%, #c8523b 100%);
+  }
+  .category-card[data-category="parenting"] .category-card-top-bar {
+    background: linear-gradient(90deg, #E8725B 0%, #d8624b 100%);
+  }
+
+  .category-card[data-category="business"] .category-visual {
+    background: linear-gradient(135deg, #4A5F7F 0%, #3a4f6f 50%, #2a3f5f 100%);
+  }
+  .category-card[data-category="business"] .category-card-top-bar {
+    background: linear-gradient(90deg, #4A5F7F 0%, #3a4f6f 100%);
+  }
+
+  .category-card[data-category="finance"] .category-visual {
+    background: linear-gradient(135deg, #2D7A6B 0%, #1d6a5b 50%, #0d5a4b 100%);
+  }
+  .category-card[data-category="finance"] .category-card-top-bar {
+    background: linear-gradient(90deg, #2D7A6B 0%, #1d6a5b 100%);
+  }
+
+  .category-card[data-category="wellness"] .category-visual {
+    background: linear-gradient(135deg, #6B9B7F 0%, #5b8b6f 50%, #4b7b5f 100%);
+  }
+  .category-card[data-category="wellness"] .category-card-top-bar {
+    background: linear-gradient(90deg, #6B9B7F 0%, #5b8b6f 100%);
+  }
+
+  .category-card[data-category="relationships"] .category-visual {
+    background: linear-gradient(135deg, #E8725B 0%, #d8624b 50%, #c8523b 100%);
+  }
+  .category-card[data-category="relationships"] .category-card-top-bar {
+    background: linear-gradient(90deg, #E8725B 0%, #d8624b 100%);
+  }
+
+  .category-card[data-category="growth"] .category-visual {
+    background: linear-gradient(135deg, #D4A574 0%, #c49564 50%, #b48554 100%);
+  }
+  .category-card[data-category="growth"] .category-card-top-bar {
+    background: linear-gradient(90deg, #D4A574 0%, #c49564 100%);
+  }
+
+  .category-card[data-category="productivity"] .category-visual {
+    background: linear-gradient(135deg, #F5D5C8 0%, #E8B8A8 50%, #D89878 100%);
+  }
+  .category-card[data-category="productivity"] .category-card-top-bar {
+    background: linear-gradient(90deg, #F5D5C8 0%, #E8B8A8 100%);
+  }
+
+  .category-card[data-category="technology"] .category-visual {
+    background: linear-gradient(135deg, #1A2332 0%, #0a1322 50%, #000000 100%);
+  }
+  .category-card[data-category="technology"] .category-card-top-bar {
+    background: linear-gradient(90deg, #4A5F7F 0%, #3a4f6f 100%);
+  }
+
+  @media (max-width: 768px) {
+    .categories-grid {
+      grid-template-columns: 1fr;
+      padding: 0 var(--spacing-md);
+      gap: 24px;
+    }
+    .category-card {
+      height: 400px;
+    }
+    .category-title {
+      font-size: 26px;
+    }
+    .category-overlay {
+      padding: 24px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .category-card, .category-card:hover .category-visual img, .category-card:hover .cta-arrow {
+      transition: none;
+    }
+  }
+{%- endstyle -%}
+
+<div class="infinite-categories-section">
+  <div class="categories-grid">
+    {%- for category in section.blocks -%}
+      <a href="{{ category.settings.collection_url }}" class="category-card" data-category="{{ category.settings.category_slug }}">
+        <div class="category-card-top-bar"></div>
+        <div class="category-visual">
+          {%- if category.settings.image -%}
+            <img src="{{ category.settings.image | img_url: '500x600' }}" alt="{{ category.settings.title }}" loading="lazy">
+          {%- else -%}
+            {{ category.settings.emoji }}
+          {%- endif -%}
+        </div>
+        <div class="category-overlay">
+          <div class="category-info">
+            <h3 class="category-title">{{ category.settings.title }}</h3>
+            <p class="category-desc">{{ category.settings.description }} <span class="cta-arrow">→</span></p>
+          </div>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Infinite Problem Solver - Categories",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "Parenting"
+        },
+        {
+          "type": "text",
+          "id": "category_slug",
+          "label": "Category Slug (for styling)",
+          "default": "parenting"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Category Description",
+          "default": "Navigate motherhood, fatherhood, and raising resilient kids"
+        },
+        {
+          "type": "url",
+          "id": "collection_url",
+          "label": "Collection URL",
+          "default": "/collections/parenting"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji (if no image)",
+          "default": "👨‍👩‍👧"
+        },
+        {
+          "type": "color",
+          "id": "color_1",
+          "label": "Gradient Color 1",
+          "default": "#F5D5C8"
+        },
+        {
+          "type": "color",
+          "id": "color_2",
+          "label": "Gradient Color 2",
+          "default": "#E8B8A8"
+        },
+        {
+          "type": "color",
+          "id": "color_3",
+          "label": "Gradient Color 3",
+          "default": "#D89878"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infinite Categories",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Parenting",
+            "category_slug": "parenting",
+            "description": "Navigate motherhood, fatherhood, and raising resilient kids",
+            "collection_url": "/collections/parenting",
+            "emoji": "👨‍👩‍👧",
+            "color_1": "#F5D5C8",
+            "color_2": "#E8B8A8",
+            "color_3": "#D89878"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Business",
+            "category_slug": "business",
+            "description": "Build, scale, and manage a thriving enterprise",
+            "collection_url": "/collections/business",
+            "emoji": "💼",
+            "color_1": "#4A5F7F",
+            "color_2": "#3a4f6f",
+            "color_3": "#2a3f5f"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Finance",
+            "category_slug": "finance",
+            "description": "Master money, investments, and financial freedom",
+            "collection_url": "/collections/finance",
+            "emoji": "💰",
+            "color_1": "#2D7A6B",
+            "color_2": "#1d6a5b",
+            "color_3": "#0d5a4b"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Health & Wellness",
+            "category_slug": "wellness",
+            "description": "Optimize sleep, nutrition, fitness, and mental health",
+            "collection_url": "/collections/wellness",
+            "emoji": "🧘",
+            "color_1": "#6B9B7F",
+            "color_2": "#5b8b6f",
+            "color_3": "#4b7b5f"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Relationships",
+            "category_slug": "relationships",
+            "description": "Build deeper connections and healthy communication",
+            "collection_url": "/collections/relationships",
+            "emoji": "❤️",
+            "color_1": "#E8725B",
+            "color_2": "#d8624b",
+            "color_3": "#c8523b"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Personal Growth",
+            "category_slug": "growth",
+            "description": "Develop confidence, skills, and your best self",
+            "collection_url": "/collections/personal-growth",
+            "emoji": "🌱",
+            "color_1": "#D4A574",
+            "color_2": "#c49564",
+            "color_3": "#b48554"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Productivity",
+            "category_slug": "productivity",
+            "description": "Work smarter, focus better, and get more done",
+            "collection_url": "/collections/productivity",
+            "emoji": "✅",
+            "color_1": "#F5D5C8",
+            "color_2": "#E8B8A8",
+            "color_3": "#D89878"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "AI & Technology",
+            "category_slug": "technology",
+            "description": "Navigate AI, tools, and the future of work",
+            "collection_url": "/collections/technology",
+            "emoji": "🤖",
+            "color_1": "#1A2332",
+            "color_2": "#0a1322",
+            "color_3": "#000000"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
